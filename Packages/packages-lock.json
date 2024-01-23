@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.pixeye.ecs": {
+      "version": "https://github.com/PixeyeHQ/actors.unity.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "f63dbe16dc3a2c0c402deb4ceac00783ebfa5457"
+    },
     "com.unity.2d.animation": {
       "version": "9.0.4",
       "depth": 1,
