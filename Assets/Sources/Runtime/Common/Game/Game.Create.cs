@@ -6,11 +6,15 @@ public partial class Game
     public static class Create
     {
 
-        public static void Board()
+        public static void Board(int columns = 32, int rows = 18)
         {
-            var entity = GameLayer.Actor.Create(Prefab.Player, new Vector3(1, 1)).entity;
-
+            Create.Player();
             Debug.Log("Created Player entity");
+        }
+
+        public static void Player()
+        {
+            GameLayer.Actor.Create(Prefab.Player, new Vector3(1, 1));
         }
 
     }

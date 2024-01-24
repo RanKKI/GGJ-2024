@@ -1,10 +1,24 @@
 //  Project : 2D Roguelike Actors
 // Contacts : @Alexeee#8796 - https://discord.gg/zAJn9SX
 
+using System.Collections.Generic;
 using Pixeye.Actors;
+using UnityEngine;
 
 sealed class ProcessorCollider : Processor
 {
+
+
+	public ProcessorCollider(List<Collider2D> colliders)
+	{
+		// Physics.colliders.CopyTo(colliders.ToArray(), 0);
+		// for (int i = 0; i < colliders.Count; i++)
+		// {
+		// 	Debug.Log(colliders[i].gameObject.name);
+		// 	Physics.colliders[i] = colliders[i];
+		// }
+	}
+
 	readonly Group<ComponentObject> source;
 
 	public override void HandleEcsEvents()
@@ -12,7 +26,7 @@ sealed class ProcessorCollider : Processor
 		foreach (ent entity in source.added)
 		{
 			var cObject = entity.ComponentObject();
-
+			// Physics.colliders[0] = cObject.collider;
 			Physics.buffer.Insert(entity, cObject.collider.GetHashCode());
 		}
 

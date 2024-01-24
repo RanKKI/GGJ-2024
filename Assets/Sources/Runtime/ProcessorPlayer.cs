@@ -12,12 +12,24 @@ public class ProcessorPlayer : Processor, ITick
 
         var cPlayer = entity.ComponentPlayer();
         var cObject = entity.ComponentObject();
+
         var dir = CheckInput();
         if (dir == default) return;
 
-        var target = dir + new Vector2(cObject.position.x, cObject.position.y);
+        if (dir == Vector2.up)
+        {
+            cPlayer.rigidbody.AddForce(Vector2.up * 200);
+            return;
+        }
+
+        var curr = entity.transform.position;
+        var scale = 20;
+        dir.Scale(new Vector2(dt * scale, dt * scale));
+        var target = dir + (Vector2)curr;
 
         var hasSolidColliderInPoint = Physics.HasSolidColliderInPoint(target, 1 << 10, out ent withEntity);
+
+        Debug.Log(hasSolidColliderInPoint);
 
         if (hasSolidColliderInPoint) return;
 
@@ -30,14 +42,13 @@ public class ProcessorPlayer : Processor, ITick
     Vector2 CheckInput()
     {
         var dir = default(Vector2);
-
         if (Input.GetKeyDown(KeyCode.UpArrow))
             dir = Vector2.up;
         else if (Input.GetKeyDown(KeyCode.DownArrow))
             dir = Vector2.down;
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        else if (Input.GetKey(KeyCode.LeftArrow))
             dir = Vector2.left;
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        else if (Input.GetKey(KeyCode.RightArrow))
             dir = Vector2.right;
         return dir;
     }
