@@ -11,4 +11,14 @@ public static partial class Game
         cObject.collider = entity.GetMono<Collider2D>();
         // cObject.renderer = entity.GetMono<SpriteRenderer>("view");
     }
+
+
+    public static void ChangeHealth(in ent entity, int count)
+    {
+        GameLayer.Send(new SignalChangeHealth
+        {
+            target = entity,
+            count = count
+        });
+    }
 }

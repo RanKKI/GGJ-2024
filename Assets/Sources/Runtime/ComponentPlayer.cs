@@ -7,7 +7,6 @@ using UnityEngine;
 public class ComponentPlayer
 {
     public ent observer = default;
-
     public Rigidbody2D rigidbody;
 
 }

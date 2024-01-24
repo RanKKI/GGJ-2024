@@ -19,6 +19,7 @@ public class ProcessorPlayer : Processor, ITick
         if (dir == Vector2.up)
         {
             cPlayer.rigidbody.AddForce(Vector2.up * 200);
+            Game.ChangeHealth(entity, -1);
             return;
         }
 
