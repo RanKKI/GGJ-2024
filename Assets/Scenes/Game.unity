@@ -623,7 +623,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 818630407596329776, guid: 0106a8ad1d01e4f9c8b5211a65c43a62, type: 3}
       propertyPath: leftToRight
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1478818851166402305, guid: 0106a8ad1d01e4f9c8b5211a65c43a62, type: 3}
       propertyPath: m_AnchorMax.y

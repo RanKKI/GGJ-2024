@@ -33,7 +33,9 @@ public class ProcessorPlayer : Processor, ITick
 
         if (dir == Vector2.down)
         {
-            cPlayer.rigidbody.AddForce(Vector2.down * 200);
+            // cPlayer.rigidbody.AddForce(Vector2.down * 200);
+            Game.ChangeHealth(entity, -1);
+            Game.ChangeHappiness(entity, -1);
             return;
         }
 

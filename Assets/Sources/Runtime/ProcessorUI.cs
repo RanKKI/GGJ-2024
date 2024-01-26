@@ -4,16 +4,24 @@ public class ProcessorUI : Processor, IReceive<SignalChangeHealth>, IReceive<Sig
 {
     private ent hapObserver;
 
+
+    private int GetPlayerID(ent entity)
+    {
+        var cPlayer = entity.ComponentPlayer();
+        return cPlayer.playerType == PlayerType.Player1 ? 1 : 2;
+    }
+
     public void HandleSignal(in SignalChangeHealth arg)
     {
         var entity = arg.target;
         var cHealth = entity.ComponentHealth();
 
+        var id = GetPlayerID(entity);
         var health = cHealth.count += arg.count;
 
         if (entity.Has<ComponentPlayer>())
         {
-            var hpBar = GameLayer.GetObj("HP Bar 1").GetComponent<HPBar>();
+            var hpBar = GameLayer.GetObj("HP Bar " + id).GetComponent<HPBar>();
             hpBar.SetHealth(health);
         }
     }
@@ -21,6 +29,7 @@ public class ProcessorUI : Processor, IReceive<SignalChangeHealth>, IReceive<Sig
     public void HandleSignal(in SignalChangeHappiness arg)
     {
         var entity = arg.target;
+        var id = GetPlayerID(entity);
         var cHappiness = entity.ComponentHappiness();
 
         var happiness = cHappiness.count += arg.count;
@@ -28,7 +37,7 @@ public class ProcessorUI : Processor, IReceive<SignalChangeHealth>, IReceive<Sig
 
         if (entity.Has<ComponentPlayer>())
         {
-            var hapBar = GameLayer.GetObj("HAP Bar 2").GetComponent<HAPBar>();
+            var hapBar = GameLayer.GetObj("HAP Bar " + id).GetComponent<HAPBar>();
             hapBar.SetValue(happiness);
         }
     }
