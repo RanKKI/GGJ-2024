@@ -1,12 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using Pixeye.Actors;
 using UnityEngine;
 
 
 public class ComponentPlayer
 {
+
     public ent observer = default;
+
+    public PlayerType playerType = default;
+
     public Rigidbody2D rigidbody;
 
 }

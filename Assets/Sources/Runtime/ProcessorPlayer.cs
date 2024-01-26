@@ -8,25 +8,32 @@ public class ProcessorPlayer : Processor, ITick
     public void Tick(float dt)
     {
         if (source.length <= 0) return;
-        ref var entity = ref source[0];
+        for (var i = 0; i < source.length; i++)
+        {
+            ref var entity = ref source.entities[i];
+            Process(ref entity, dt);
+        }
+
+    }
+
+    void Process(ref ent entity, float dt)
+    {
 
         var cPlayer = entity.ComponentPlayer();
         var cObject = entity.ComponentObject();
 
-        var dir = CheckInput();
+        var dir = cPlayer.playerType == PlayerType.Player1 ? CheckInput1() : CheckInput2();
         if (dir == default) return;
 
         if (dir == Vector2.up)
         {
             cPlayer.rigidbody.AddForce(Vector2.up * 200);
-            Game.ChangeHealth(entity, -1);
             return;
         }
 
         if (dir == Vector2.down)
         {
             cPlayer.rigidbody.AddForce(Vector2.down * 200);
-            Game.ChangeHappiness(entity, 1);
             return;
         }
 
@@ -35,11 +42,11 @@ public class ProcessorPlayer : Processor, ITick
         dir.Scale(new Vector2(dt * scale, dt * scale));
         var target = dir + (Vector2)curr;
 
-        var hasSolidColliderInPoint = Physics.HasSolidColliderInPoint(target, 1 << 10, out ent withEntity);
+        // var hasSolidColliderInPoint = Physics.HasSolidColliderInPoint(target, 1 << 10, out ent withEntity);
 
-        Debug.Log(hasSolidColliderInPoint);
+        // Debug.Log(hasSolidColliderInPoint);
 
-        if (hasSolidColliderInPoint) return;
+        // if (hasSolidColliderInPoint) return;
 
         // if (withEntity.exist) return;
 
@@ -47,7 +54,7 @@ public class ProcessorPlayer : Processor, ITick
 
     }
 
-    Vector2 CheckInput()
+    Vector2 CheckInput1()
     {
         var dir = default(Vector2);
         if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -57,6 +64,20 @@ public class ProcessorPlayer : Processor, ITick
         else if (Input.GetKey(KeyCode.LeftArrow))
             dir = Vector2.left;
         else if (Input.GetKey(KeyCode.RightArrow))
+            dir = Vector2.right;
+        return dir;
+    }
+
+    Vector2 CheckInput2()
+    {
+        var dir = default(Vector2);
+        if (Input.GetKeyDown(KeyCode.W))
+            dir = Vector2.up;
+        else if (Input.GetKeyDown(KeyCode.S))
+            dir = Vector2.down;
+        else if (Input.GetKey(KeyCode.A))
+            dir = Vector2.left;
+        else if (Input.GetKey(KeyCode.D))
             dir = Vector2.right;
         return dir;
     }
