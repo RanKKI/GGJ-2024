@@ -14,8 +14,9 @@ public class Item : Actor
         entity.Set(Tag.Item);
     }
 
-    public virtual void Fire(Vector2 dir)
+    public virtual bool Fire(Vector2 dir)
     {
+        return false;
         // entity.Get<ComponentItem>().isUsed = true;
     }
 

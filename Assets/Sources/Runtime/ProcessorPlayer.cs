@@ -24,7 +24,7 @@ public class ProcessorPlayer : Processor, ITick
 
         var dir = cPlayer.playerType == PlayerType.Player1 ? CheckInput1() : CheckInput2();
 
-        if (useItem())
+        if (UseItem())
         {
             FireItem(ref entity);
         }
@@ -50,7 +50,10 @@ public class ProcessorPlayer : Processor, ITick
         if (cPlayer.item != null)
         {
             var sideEffect = cPlayer.item.entity.ComponentSideEffect();
-            walkSpeedSideEffect = sideEffect.speed;
+            if (sideEffect != null)
+            {
+                walkSpeedSideEffect = sideEffect.speed;
+            }
         }
         var walkSpeed = Config.Speed * walkSpeedSideEffect;
 
@@ -64,17 +67,18 @@ public class ProcessorPlayer : Processor, ITick
     void FireItem(ref ent entity)
     {
         var cPlayer = entity.ComponentPlayer();
-        var cObject = entity.ComponentObject();
 
         var item = cPlayer.item;
         if (item == null) return;
-        cPlayer.item = null;
-
-        item.Fire(cPlayer.dir);
+        if (item.Fire(cPlayer.dir))
+        {
+            cPlayer.item = null;
+            return;
+        }
     }
 
 
-    bool useItem()
+    bool UseItem()
     {
         return Input.GetKeyDown(KeyCode.Space);
     }

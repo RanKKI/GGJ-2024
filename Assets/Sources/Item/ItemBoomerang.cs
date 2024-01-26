@@ -10,16 +10,17 @@ public class ItemBoomerang : Item
 
     private Vector2 _velocity = Vector2.zero;
 
-    public override void Fire(Vector2 dir)
+    public override bool Fire(Vector2 dir)
     {
         base.Fire(dir);
         Debug.Log("Fire Boomerang");
         GameObject parent = transform.parent.gameObject;
-        if (parent == null) return;
+        if (parent == null) return false;
         transform.SetParent(null);
         transform.position = parent.transform.position + (Vector3)dir;
         Debug.Log("Fire Boomerang 2");
         rigidbody.AddForce(dir * 200);
+        return true;
     }
 
     public override void Reset()

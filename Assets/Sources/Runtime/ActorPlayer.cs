@@ -26,8 +26,27 @@ sealed class ActorPlayer : Actor
         {
             HoldItem(entity.GetMono<Item>());
         }
+        else if (entity.Has(Tag.Player))
+        {
+            StealItemFromPlayer(entity);
+        }
     }
 
+    public void StealItemFromPlayer(ent otherEntity)
+    {
+        // Check if can steal
+        var cPlayer = otherEntity.Get<ComponentPlayer>();
+        if (cPlayer == null) return;
+        var item = cPlayer.item;
+        if (item == null) return;
+        var cItem = item.entity.Get<ComponentItem>();
+        if (cItem == null) return;
+        if (cItem.canSnatch)
+        {
+            cPlayer.item = null;
+            HoldItem(item);
+        }
+    }
 
     public void HoldItem(Item item)
     {

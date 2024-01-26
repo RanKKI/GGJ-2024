@@ -1,11 +1,9 @@
-﻿using System;
-using Pixeye.Actors;
-using UnityEngine;
+﻿using Pixeye.Actors;
 
 public class ComponentItem
 {
 	public bool isUsed;
-
+	public bool canSnatch = false;
 }
 
 #region HELPERS

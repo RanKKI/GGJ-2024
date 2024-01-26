@@ -9,11 +9,9 @@ public class ItemBoom : Item
         base.Setup();
         var sideEffect = entity.Set<ComponentSideEffect>();
         sideEffect.speed = 0.4f;
-    }
 
-    public override void Fire(Vector2 dir)
-    {
-        base.Fire(dir);
+        var obj = entity.Get<ComponentItem>();
+        obj.canSnatch = true;
     }
 
     public override void Reset()
