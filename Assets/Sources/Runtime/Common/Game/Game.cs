@@ -21,4 +21,13 @@ public static partial class Game
             count = count
         });
     }
+    
+    public static void ChangeHappiness(in ent entity, int count)
+    {
+        GameLayer.Send(new SignalChangeHappiness
+        {
+            target = entity,
+            count = count
+        });
+    }
 }

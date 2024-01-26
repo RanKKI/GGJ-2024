@@ -10,6 +10,7 @@ sealed class ActorPlayer : Actor
 
         entity.Set<ComponentObject>();
         entity.Set<ComponentHealth>();
+        entity.Set<ComponentHappiness>();
         entity.InitComponentObject();
 
     }

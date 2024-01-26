@@ -22,11 +22,11 @@ public static class Physics
 
         if (hit > 0)
         {
-            // var index = HelperArray.BinarySearch(ref buffer.pointers, colliders[0].GetHashCode(), 0, buffer.length);
-            // if (index != -1)
-            //     entity = buffer.entities[index];
-            // if (colliders[0].isTrigger)
-            //     return false;
+            var index = HelperArray.BinarySearch(ref buffer.pointers, colliders[0].GetHashCode(), 0, buffer.length);
+            if (index != -1)
+                entity = buffer.entities[index];
+            if (colliders[0].isTrigger)
+                return false;
 
             return true;
         }

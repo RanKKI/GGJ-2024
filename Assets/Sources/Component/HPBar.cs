@@ -1,7 +1,7 @@
 using Pixeye.Actors;
 using UnityEngine;
 
-class HPBar : MonoBehaviour
+class HPBar : MonoCached
 {
 
     public Sprite fullHealthSprite;
