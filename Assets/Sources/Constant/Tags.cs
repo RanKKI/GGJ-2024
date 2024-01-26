@@ -8,7 +8,11 @@ public class Tag : ITag
     // Objects
     [TagField]
     public const int Item = 100;
+
     [TagField]
-    public const int Player = 101;
+    public const int ItemTrigger = 101; // 不能被拾起
+
+    [TagField]
+    public const int Player = 200;
 
 }

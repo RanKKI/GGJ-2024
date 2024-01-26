@@ -17,6 +17,9 @@ public partial class Game
             var player1 = GameLayer.Actor.Create(Prefab.Player, new Vector3(1, 1));
             var player2 = GameLayer.Actor.Create(Prefab.Player, new Vector3(2, 1));
 
+            player1.gameObject.name = "Player1";
+            player2.gameObject.name = "Player2";
+
             player1.entity.ComponentPlayer().playerType = PlayerType.Player1;
             player2.entity.ComponentPlayer().playerType = PlayerType.Player2;
 

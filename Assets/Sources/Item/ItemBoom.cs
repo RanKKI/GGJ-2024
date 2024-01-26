@@ -14,19 +14,4 @@ public class ItemBoom : Item
         obj.canSnatch = true;
     }
 
-    public override void Reset()
-    {
-        base.Reset();
-    }
-
-    public override void OnOutOfScreen()
-    {
-        base.OnOutOfScreen();
-    }
-
-    protected override void OnHit(ref ent entity)
-    {
-        base.OnHit(ref entity);
-    }
-
 }

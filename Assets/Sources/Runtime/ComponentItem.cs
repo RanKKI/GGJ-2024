@@ -2,8 +2,11 @@
 
 public class ComponentItem
 {
-	public bool isUsed;
+	public bool isActive = false;
 	public bool canSnatch = false;
+	public ent holder = default;
+
+	public double holdAt = 0;
 }
 
 #region HELPERS

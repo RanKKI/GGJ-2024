@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Item : Actor
 {
+
+
     protected override void Setup()
     {
         base.Setup();
@@ -11,20 +13,23 @@ public class Item : Actor
         obj.name = "Item";
         entity.InitComponentObject();
         entity.Set<ComponentItem>();
+        SetTag();
+    }
+
+    protected virtual void SetTag()
+    {
         entity.Set(Tag.Item);
     }
 
     public virtual bool Fire(Vector2 dir)
     {
         return false;
-        // entity.Get<ComponentItem>().isUsed = true;
     }
 
     public virtual void OnOutOfScreen()
     {
 
     }
-
 
     public virtual void Reset()
     {
@@ -33,16 +38,24 @@ public class Item : Actor
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        var entity = collision.gameObject.GetEntity();
-        if (entity.Has(Tag.Player))
+        var cItem = entity.Get<ComponentItem>();
+        if (!cItem.isActive)
         {
-            OnHit(ref entity);
+            return;
+        }
+        if (cItem.holder != default) return;
+
+        var otherEntity = collision.gameObject.GetEntity();
+        if (otherEntity.Has(Tag.Player))
+        {
+            Debug.Log("OnTriggerEnter2D");
+            OnHitPlayer(otherEntity);
         }
     }
 
-    protected virtual void OnHit(ref ent entity)
+    protected virtual void OnHitPlayer(ent player)
     {
-        Debug.Log("Item: OnHit");
+
     }
 
 }

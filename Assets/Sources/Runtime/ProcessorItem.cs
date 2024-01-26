@@ -1,7 +1,8 @@
 using System;
 using Pixeye.Actors;
+using UnityEngine;
 
-public class ProcessorItem : Processor, ITick
+public class ProcessorItem : Processor, ITick, IReceive<SignalHoldItem>, IReceive<SignalFireItem>, IReceive<SignalDisposeItem>
 {
 
     readonly Group<ComponentObject> objects;
@@ -18,6 +19,7 @@ public class ProcessorItem : Processor, ITick
 
     void Process(ref ent entity, float dt)
     {
+        if (entity == null || entity == default) return;
         var pos = entity.transform.localPosition;
         if (Math.Abs(pos.x) >= ScreenSize.width)
         {
@@ -27,5 +29,74 @@ public class ProcessorItem : Processor, ITick
                 item.OnOutOfScreen();
             }
         }
+    }
+
+    public void HandleSignal(in SignalHoldItem arg)
+    {
+        Debug.Log("Handle SignalHoldItem");
+        var item = arg.item;
+        var player = arg.holder;
+        var now = UnityEngine.Time.timeAsDouble;
+
+        var cItem = item.ComponentItem();
+        var cPlayer = player.ComponentPlayer();
+        var itemComponent = item.GetMono<Item>();
+
+        if (cPlayer.item != null)
+        {
+            return;
+        }
+
+        if (now - cItem.holdAt < 1)
+        {
+            return;
+        }
+
+        if (cItem.holder != default)
+        {
+            var cPlayerOld = cItem.holder.ComponentPlayer();
+            cPlayerOld.item = null;
+        }
+
+        cItem.isActive = true;
+        cItem.holder = player;
+        cItem.holdAt = now;
+        cPlayer.item = itemComponent;
+
+        itemComponent.Reset();
+
+        itemComponent.transform.SetParent(player.transform);
+        itemComponent.transform.localPosition = Vector3.zero;
+        itemComponent.transform.localRotation = Quaternion.identity;
+    }
+
+    public void HandleSignal(in SignalFireItem arg)
+    {
+        var item = arg.item;
+        var player = arg.holder;
+
+        var cItem = item.ComponentItem();
+        var cPlayer = player.ComponentPlayer();
+        var itemComponent = item.GetMono<Item>();
+
+        itemComponent.Fire(cPlayer.dir);
+
+        cItem.holder = default;
+        cPlayer.item = null;
+    }
+
+    public void HandleSignal(in SignalDisposeItem arg)
+    {
+        var item = arg.item;
+        var cItem = item.Get<ComponentItem>();
+        if (cItem.holder != default)
+        {
+            var cPlayer = cItem.holder.ComponentPlayer();
+            cPlayer.item = null;
+        }
+        cItem.holder = default;
+        cItem.isActive = false;
+        GameLayer.Destroy(arg.obj);
+        item.Release();
     }
 }

@@ -70,11 +70,23 @@ public class ProcessorPlayer : Processor, ITick
 
         var item = cPlayer.item;
         if (item == null) return;
-        if (item.Fire(cPlayer.dir))
+
+        // if (item.Fire(cPlayer.dir))
+        // {
+        //     // cPlayer.item = null;
+        //     GameLayer.Send(new SignalFireItem
+        //     {
+        //         item = item.entity,
+        //         holder = entity
+        //     });
+        //     return;
+        // }
+
+        GameLayer.Send(new SignalFireItem
         {
-            cPlayer.item = null;
-            return;
-        }
+            item = item.entity,
+            holder = entity
+        });
     }
 
 

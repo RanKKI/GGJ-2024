@@ -18,50 +18,65 @@ sealed class ActorPlayer : Actor
         entity.Set(Tag.Player);
     }
 
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        HandleCollisionWithItem(collision.collider);
+    }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        var entity = collision.gameObject.GetEntity();
-        if (entity.Has(Tag.Item))
-        {
-            HoldItem(entity.GetMono<Item>());
-        }
-        else if (entity.Has(Tag.Player))
-        {
-            StealItemFromPlayer(entity);
-        }
+        HandleCollisionWithItem(collision);
     }
 
-    public void StealItemFromPlayer(ent otherEntity)
+    void HandleCollisionWithItem(Collider2D collision)
+    {
+        Debug.Log(gameObject.name + " HandleCollisionWithItem: " + collision.gameObject.name);
+        ent otherEntity;
+        try
+        {
+            otherEntity = collision.gameObject.GetEntity();
+        }
+        catch (System.Exception)
+        {
+            return;
+        }
+        bool isSuccessHoldItem = false;
+        ent itemEnt = default;
+        if (otherEntity.Has(Tag.Item))
+        {
+            itemEnt = otherEntity;
+            var cItem = otherEntity.Get<ComponentItem>();
+            isSuccessHoldItem = !cItem.isActive;
+        }
+        else if (otherEntity.Has(Tag.Player))
+        {
+            Debug.Log(gameObject.name + " StealItemFromPlayer: " + collision.gameObject.name);
+            var item = StealItemFromPlayer(otherEntity);
+            isSuccessHoldItem = item != default;
+            itemEnt = item;
+        }
+
+        if (!isSuccessHoldItem || itemEnt == default) return;
+
+        GameLayer.Send(new SignalHoldItem
+        {
+            item = itemEnt,
+            holder = entity
+        });
+    }
+
+    public ent StealItemFromPlayer(ent otherEntity)
     {
         // Check if can steal
         var cPlayer = otherEntity.Get<ComponentPlayer>();
-        if (cPlayer == null) return;
+        if (cPlayer == null) return default;
         var item = cPlayer.item;
-        if (item == null) return;
+        if (item == null) return default;
         var cItem = item.entity.Get<ComponentItem>();
-        if (cItem == null) return;
-        if (cItem.canSnatch)
-        {
-            cPlayer.item = null;
-            HoldItem(item);
-        }
+        if (cItem == null) return default;
+        if (!cItem.canSnatch) return default;
+        return item.entity;
     }
 
-    public void HoldItem(Item item)
-    {
-        if (item == null) return;
-        var cPlayer = entity.ComponentPlayer();
-        if (cPlayer.item != null) return;
-
-        item.Reset();
-        // var itemComponent = item.entity.ComponentItem();
-        // if (itemComponent.isUsed) return;
-        Debug.Log("HoldItem");
-        cPlayer.item = item;
-        item.transform.SetParent(itemHolder.transform);
-        item.transform.localPosition = Vector3.zero;
-        item.transform.localRotation = Quaternion.identity;
-    }
 
 }
