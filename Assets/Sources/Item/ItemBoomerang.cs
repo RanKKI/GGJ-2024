@@ -1,3 +1,4 @@
+using Pixeye.Actors;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -5,6 +6,9 @@ public class ItemBoomerang : Item
 {
 
     public Rigidbody2D rigidbody;
+
+
+    private Vector2 _velocity = Vector2.zero;
 
     public override void Fire(Vector2 dir)
     {
@@ -21,7 +25,7 @@ public class ItemBoomerang : Item
     public override void Reset()
     {
         base.Reset();
-        rigidbody.velocity = Vector2.zero;
+        updateVelocity(Vector2.zero);
     }
 
     public override void OnOutOfScreen()
@@ -30,7 +34,23 @@ public class ItemBoomerang : Item
         Debug.Log("OnOutOfScreen Boomerang");
         Vector2 reverseDir = rigidbody.velocity;
         reverseDir.Scale(new Vector2(-1, 0));
-        rigidbody.velocity = reverseDir;
+        updateVelocity(reverseDir);
+    }
+
+    private void updateVelocity(Vector2 vec)
+    {
+        _velocity = rigidbody.velocity.normalized;
+        rigidbody.velocity = vec;
+    }
+
+    protected override void OnHit(ref ent entity)
+    {
+        base.OnHit(ref entity);
+        var targetRigibody2D = entity.GetMono<Rigidbody2D>();
+        if (targetRigibody2D != null)
+        {
+            targetRigibody2D.AddForce(_velocity * 100);
+        }
     }
 
 }

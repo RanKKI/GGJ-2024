@@ -35,22 +35,19 @@ public class ProcessorPlayer : Processor, ITick
 
         if (dir == Vector2.up)
         {
-            cPlayer.rigidbody.AddForce(Vector2.up * 200);
+            cPlayer.rigidbody.AddForce(Vector2.up * Config.JumpForce);
             return;
         }
 
         if (dir == Vector2.down)
         {
-            // // cPlayer.rigidbody.AddForce(Vector2.down * 200);
             Game.ChangeHealth(entity, -1);
             Game.ChangeHappiness(entity, -1);
             return;
         }
 
         var curr = entity.transform.position;
-        var scale = 20;
-        dir.Scale(new Vector2(dt * scale, dt * scale));
-        var target = dir + (Vector2)curr;
+        var target = (Config.Speed * dt * dir) + (Vector2)curr;
 
         // var hasSolidColliderInPoint = Physics.HasSolidColliderInPoint(target, 1 << 10, objects.entities, out ent withEntity);
 

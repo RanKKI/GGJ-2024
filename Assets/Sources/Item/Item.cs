@@ -25,8 +25,9 @@ public class Item : Actor
     }
 
 
-    public virtual void Reset() {
-        
+    public virtual void Reset()
+    {
+
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -40,7 +41,7 @@ public class Item : Actor
 
     protected virtual void OnHit(ref ent entity)
     {
-
+        Debug.Log("Item: OnHit");
     }
 
 }
