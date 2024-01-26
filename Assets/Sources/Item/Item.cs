@@ -5,6 +5,7 @@ public class Item : Actor
 {
     protected override void Setup()
     {
+        base.Setup();
         Debug.Log("Item: Setup");
         var obj = entity.Set<ComponentObject>();
         obj.name = "Item";
@@ -15,8 +16,7 @@ public class Item : Actor
 
     public virtual void Fire(Vector2 dir)
     {
-        entity.Get<ComponentItem>().isUsed = true;
-        Debug.Log("ItemBoomerang: Fire");
+        // entity.Get<ComponentItem>().isUsed = true;
     }
 
     public virtual void OnOutOfScreen()

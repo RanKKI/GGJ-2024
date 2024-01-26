@@ -46,24 +46,16 @@ public class ProcessorPlayer : Processor, ITick
             return;
         }
 
+        float walkSpeedSideEffect = 1;
+        if (cPlayer.item != null)
+        {
+            var sideEffect = cPlayer.item.entity.ComponentSideEffect();
+            walkSpeedSideEffect = sideEffect.speed;
+        }
+        var walkSpeed = Config.Speed * walkSpeedSideEffect;
+
         var curr = entity.transform.position;
-        var target = (Config.Speed * dt * dir) + (Vector2)curr;
-
-        // var hasSolidColliderInPoint = Physics.HasSolidColliderInPoint(target, 1 << 10, objects.entities, out ent withEntity);
-
-        // if (withEntity != null)
-        // {
-        //     var obj = withEntity.ComponentObject();
-        //     Debug.Log(withEntity);
-        //     if (obj != null)
-        //     {
-        //         Debug.Log(hasSolidColliderInPoint + "-" + obj.name);
-        //     }
-        // }
-
-        // if (hasSolidColliderInPoint) return;
-
-        // if (withEntity.exist) return;
+        var target = (walkSpeed * dt * dir) + (Vector2)curr;
 
         Game.MoveTo(entity, target);
 

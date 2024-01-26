@@ -32,12 +32,13 @@ sealed class ActorPlayer : Actor
     public void HoldItem(Item item)
     {
         if (item == null) return;
-        item.Reset();
+        var cPlayer = entity.ComponentPlayer();
+        if (cPlayer.item != null) return;
 
+        item.Reset();
         // var itemComponent = item.entity.ComponentItem();
         // if (itemComponent.isUsed) return;
         Debug.Log("HoldItem");
-        var cPlayer = entity.ComponentPlayer();
         cPlayer.item = item;
         item.transform.SetParent(itemHolder.transform);
         item.transform.localPosition = Vector3.zero;
