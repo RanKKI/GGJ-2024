@@ -1,4 +1,5 @@
-﻿using Pixeye.Actors;
+﻿using System;
+using Pixeye.Actors;
 using UnityEngine;
 
 public class ComponentObject
@@ -7,6 +8,8 @@ public class ComponentObject
 
 	public Collider2D collider;
 	public SpriteRenderer renderer;
+
+	public string name = "";
 }
 
 #region HELPERS

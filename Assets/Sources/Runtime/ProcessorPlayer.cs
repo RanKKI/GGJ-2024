@@ -5,6 +5,9 @@ public class ProcessorPlayer : Processor, ITick
 {
     readonly Group<ComponentObject, ComponentPlayer> source;
 
+
+    readonly Group<ComponentObject> objects;
+
     public void Tick(float dt)
     {
         if (source.length <= 0) return;
@@ -33,9 +36,10 @@ public class ProcessorPlayer : Processor, ITick
 
         if (dir == Vector2.down)
         {
-            // cPlayer.rigidbody.AddForce(Vector2.down * 200);
-            Game.ChangeHealth(entity, -1);
-            Game.ChangeHappiness(entity, -1);
+            FireItem(ref entity);
+            // // cPlayer.rigidbody.AddForce(Vector2.down * 200);
+            // Game.ChangeHealth(entity, -1);
+            // Game.ChangeHappiness(entity, -1);
             return;
         }
 
@@ -44,9 +48,17 @@ public class ProcessorPlayer : Processor, ITick
         dir.Scale(new Vector2(dt * scale, dt * scale));
         var target = dir + (Vector2)curr;
 
-        // var hasSolidColliderInPoint = Physics.HasSolidColliderInPoint(target, 1 << 10, out ent withEntity);
+        // var hasSolidColliderInPoint = Physics.HasSolidColliderInPoint(target, 1 << 10, objects.entities, out ent withEntity);
 
-        // Debug.Log(hasSolidColliderInPoint);
+        // if (withEntity != null)
+        // {
+        //     var obj = withEntity.ComponentObject();
+        //     Debug.Log(withEntity);
+        //     if (obj != null)
+        //     {
+        //         Debug.Log(hasSolidColliderInPoint + "-" + obj.name);
+        //     }
+        // }
 
         // if (hasSolidColliderInPoint) return;
 
@@ -54,6 +66,18 @@ public class ProcessorPlayer : Processor, ITick
 
         Game.MoveTo(entity, target);
 
+    }
+
+    void FireItem(ref ent entity)
+    {
+        var cPlayer = entity.ComponentPlayer();
+        var cObject = entity.ComponentObject();
+
+        var item = cPlayer.item;
+        if (item == null) return;
+
+        item.Fire();
+        cPlayer.item = null;
     }
 
     Vector2 CheckInput1()

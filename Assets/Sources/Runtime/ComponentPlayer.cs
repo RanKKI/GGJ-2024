@@ -11,6 +11,8 @@ public class ComponentPlayer
 
     public Rigidbody2D rigidbody;
 
+    public Item item = default;
+
 }
 
 #region HELPERS
