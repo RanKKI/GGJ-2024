@@ -15,6 +15,7 @@ sealed class ActorPlayer : Actor
         entity.Set<ComponentHealth>();
         entity.Set<ComponentHappiness>();
         entity.InitComponentObject();
+        entity.Set(Tag.Player);
     }
 
 
@@ -31,8 +32,10 @@ sealed class ActorPlayer : Actor
     public void HoldItem(Item item)
     {
         if (item == null) return;
-        var itemComponent = item.entity.ComponentItem();
-        if (itemComponent.isUsed) return;
+        item.Reset();
+
+        // var itemComponent = item.entity.ComponentItem();
+        // if (itemComponent.isUsed) return;
         Debug.Log("HoldItem");
         var cPlayer = entity.ComponentPlayer();
         cPlayer.item = item;

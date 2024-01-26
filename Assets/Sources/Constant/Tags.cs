@@ -8,5 +8,7 @@ public class Tag : ITag
     // Objects
     [TagField]
     public const int Item = 100;
+    [TagField]
+    public const int Player = 101;
 
 }

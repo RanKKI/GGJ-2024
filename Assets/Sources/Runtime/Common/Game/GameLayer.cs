@@ -12,6 +12,8 @@ public class GameLayer : Layer<GameLayer>
 
         Add(new ProcessorCollider(new List<Collider2D> { collider2D }));
         Add<ProcessorPlayer>();
+        
+        Add<ProcessorItem>();
         Add<ProcessorUI>();
 
         Game.Create.Board();

@@ -5,9 +5,6 @@ public class ProcessorPlayer : Processor, ITick
 {
     readonly Group<ComponentObject, ComponentPlayer> source;
 
-
-    readonly Group<ComponentObject> objects;
-
     public void Tick(float dt)
     {
         if (source.length <= 0) return;

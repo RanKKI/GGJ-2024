@@ -5,6 +5,7 @@ using UnityEngine;
 public class ComponentItem
 {
 	public bool isUsed;
+
 }
 
 #region HELPERS

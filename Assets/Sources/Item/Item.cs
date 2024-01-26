@@ -19,4 +19,28 @@ public class Item : Actor
         Debug.Log("ItemBoomerang: Fire");
     }
 
+    public virtual void OnOutOfScreen()
+    {
+
+    }
+
+
+    public virtual void Reset() {
+        
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        var entity = collision.gameObject.GetEntity();
+        if (entity.Has(Tag.Player))
+        {
+            OnHit(ref entity);
+        }
+    }
+
+    protected virtual void OnHit(ref ent entity)
+    {
+
+    }
+
 }
