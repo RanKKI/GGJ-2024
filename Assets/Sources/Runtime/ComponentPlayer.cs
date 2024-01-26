@@ -13,6 +13,8 @@ public class ComponentPlayer
 
     public Item item = default;
 
+    public Vector2 dir = default;
+
 }
 
 #region HELPERS

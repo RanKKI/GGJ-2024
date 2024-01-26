@@ -30,6 +30,10 @@ sealed class ActorPlayer : Actor
 
     public void HoldItem(Item item)
     {
+        if (item == null) return;
+        var itemComponent = item.entity.ComponentItem();
+        if (itemComponent.isUsed) return;
+        Debug.Log("HoldItem");
         var cPlayer = entity.ComponentPlayer();
         cPlayer.item = item;
         item.transform.SetParent(itemHolder.transform);

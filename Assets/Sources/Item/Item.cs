@@ -3,20 +3,20 @@ using UnityEngine;
 
 public class Item : Actor
 {
-
     protected override void Setup()
     {
         Debug.Log("Item: Setup");
-        entity.Set<ComponentObject>();
+        var obj = entity.Set<ComponentObject>();
+        obj.name = "Item";
         entity.InitComponentObject();
-        entity.Get<ComponentObject>().name = "Item";
+        entity.Set<ComponentItem>();
         entity.Set(Tag.Item);
     }
 
-
-    public virtual void Fire()
+    public virtual void Fire(Vector2 dir)
     {
-        Debug.Log("ItemBoomerang: Start");
+        entity.Get<ComponentItem>().isUsed = true;
+        Debug.Log("ItemBoomerang: Fire");
     }
 
 }
