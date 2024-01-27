@@ -41,7 +41,7 @@ public class ProcessorPlayer : Processor, ITick
 
         cPlayer.dir = dir;
 
-        if (dir == Vector2.up && cPlayer.canJump)
+        if (dir.y == Vector2.up.y && cPlayer.canJump)
         {
             cPlayer.rigidbody.AddForce(Vector2.up * Config.JumpForce);
             cPlayer.canJump = false;
@@ -94,12 +94,13 @@ public class ProcessorPlayer : Processor, ITick
     Vector2 GetBuffWalk(ComponentPlayer cPlayer)
     {
         var idx = cPlayer.buffs.FindIndex(buff => buff.autoWalkDir != Vector2.zero);
+        var dir = cPlayer.playerType == PlayerType.Player1 ? CheckInput1() : CheckInput2();
         if (idx >= 0)
         {
-            return cPlayer.buffs[idx].autoWalkDir;
+            var autoDir = cPlayer.buffs[idx].autoWalkDir;
+            return new Vector2(autoDir.x, dir.y);
         }
-        return cPlayer.playerType == PlayerType.Player1 ? CheckInput1() : CheckInput2();
-
+        return dir;
     }
 
     void FireItem(ref ent entity)
