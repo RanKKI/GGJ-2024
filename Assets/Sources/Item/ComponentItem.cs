@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Pixeye.Actors;
 
 public class ComponentItem
@@ -17,6 +18,9 @@ public class ComponentItem
 	public Buff[] onHoldBuffs = {};
 
 	public Buff[] onTriggerBuffs = {};
+	
+	public Action onPickUp;
+	public Action onOutOfScreen;
 }
 
 #region HELPERS

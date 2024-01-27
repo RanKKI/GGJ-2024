@@ -20,6 +20,7 @@ public class GameLayer : Layer<GameLayer>
         Add<ProcessorSpawner>();
 
         Add<ProcessorBuffRemoval>();
+        Add<ProcessorLife>();
 
         Game.Create.Board();
     }

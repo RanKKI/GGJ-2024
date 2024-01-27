@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Pixeye.Actors;
 using UnityEngine;
@@ -8,6 +9,7 @@ public delegate void AnimationCallback(); // declare delegate type
 
 public class Item : Actor
 {
+    public float lifeTime = 10f;
 
     protected override void Setup()
     {
@@ -21,6 +23,10 @@ public class Item : Actor
 
         var cItem = entity.Get<ComponentItem>();
         cItem.name = GetName();
+        
+        var cLife = entity.Set<ComponentLife>();
+        cLife.lifeTime = lifeTime;
+        cLife.liveTime = 0;
     }
 
     protected virtual string GetName()
@@ -40,7 +46,7 @@ public class Item : Actor
 
     public virtual void OnOutOfScreen()
     {
-
+        entity.Get<ComponentItem>().onOutOfScreen?.Invoke();
     }
 
     public void SetConstraint(GameObject parent)
@@ -65,7 +71,8 @@ public class Item : Actor
 
     public virtual void OnPickUp()
     {
-
+        entity.Get<ComponentItem>().onPickUp?.Invoke();
+        entity.Remove<ComponentLife>();
     }
 
     void OnTriggerEnter2D(Collider2D collision)

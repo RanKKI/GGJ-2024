@@ -13,7 +13,6 @@ public class ActorFireRing : Actor
     protected override void Setup()
     {
         base.Setup();
-        var obj = entity.Set<ComponentObject>();
         var cHappyAdding = entity.Set<ComponentHappyAdding>();
         cHappyAdding.signal = signalChangeHappiness;
         cHappyAdding.colliders = happyAddingColliders;

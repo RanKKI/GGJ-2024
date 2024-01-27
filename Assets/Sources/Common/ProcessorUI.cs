@@ -3,9 +3,6 @@ using UnityEngine;
 
 public class ProcessorUI : Processor, IReceive<SignalChangeHealth>, IReceive<SignalChangeHappiness>
 {
-    private ent hapObserver;
-
-
     private int GetPlayerID(ent entity)
     {
         var cPlayer = entity.ComponentPlayer();
@@ -37,7 +34,6 @@ public class ProcessorUI : Processor, IReceive<SignalChangeHealth>, IReceive<Sig
         var cHappiness = entity.ComponentHappiness();
 
         var happiness = cHappiness.count += arg.count;
-        if (hapObserver.exist) return;
 
         if (entity.Has<ComponentPlayer>())
         {
