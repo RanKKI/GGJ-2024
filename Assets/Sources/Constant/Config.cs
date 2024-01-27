@@ -7,7 +7,7 @@ public static class Config
     public static float Speed = 5f;
 
 
-    public static int MaxHappiness = 100;
+    public static int MaxHappiness = 24;
 
 
 }

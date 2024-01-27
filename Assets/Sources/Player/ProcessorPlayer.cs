@@ -77,7 +77,7 @@ public class ProcessorPlayer : Processor, ITick
             GameLayer.Send(new SignalPlaySound
             {
                 name = "jump",
-                volume = 1f,
+                volume = 0.8f,
                 pos = entity.transform.position,
             });
         }

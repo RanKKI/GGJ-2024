@@ -56,7 +56,7 @@ public class ProcessorSound : Processor, IReceive<SignalPlaySound>
         bgmSource = GameObject.Find("BackgroundMusic").GetComponent<AudioSource>();
         IsStop = false;
         BgmVolume = 1f;
-        EffectVolume = 1f;
+        EffectVolume = 2f;
     }
 
     public void PlayBGM(string res)
@@ -85,11 +85,15 @@ public class ProcessorSound : Processor, IReceive<SignalPlaySound>
             clip = Resources.Load<AudioClip>($"Sounds/{soundName}");
             clips.Add(soundName, clip);
         }
-        AudioSource.PlayClipAtPoint(clips[soundName], pos, volume);
+        AudioSource.PlayClipAtPoint(clips[soundName], pos, volume * effectVolume);
     }
 
     public void HandleSignal(in SignalPlaySound arg)
     {
-        PlayEffect(arg.name, arg.volume, arg.pos);
+        try{
+            PlayEffect(arg.name, arg.volume, arg.pos);
+        }catch(System.Exception e){
+            Debug.Log(e);
+        }
     }
 }

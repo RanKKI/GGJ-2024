@@ -25,6 +25,14 @@ public class ItemBoomerang : Item
         transform.position = parent.transform.position + (Vector3)dir;
         _velocity = dir;
         rigidbody.AddForce(dir * 200);
+        
+        GameLayer.Send(new SignalPlaySound
+        {
+            name = "boomerang",
+            volume = 3,
+            pos = transform.position,
+        });
+        
         return true;
     }
 
@@ -54,6 +62,16 @@ public class ItemBoomerang : Item
 
     private void UpdateVelocity(Vector2 vec)
     {
+        DOTween.Sequence().AppendInterval(1f).OnComplete(() =>
+        {
+            GameLayer.Send(new SignalPlaySound
+            {
+                name = "boomerang",
+                volume = 3,
+                pos = transform.position,
+            });
+        }).Play();
+        
         _velocity = rigidbody.velocity.normalized;
         rigidbody.velocity = vec;
     }

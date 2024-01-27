@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 909227339
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1233851174, guid: db3e52879c947460096bd0337a9a091b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c19bcd36e431ece4b91808e74f9d2b4e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -101,7 +101,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _entity: 0
   prefabReferenceName: 
-  lifeTime: 10
   rb: {fileID: 5508203378519097600}
   recover: 3
 --- !u!61 &6173523605871189715

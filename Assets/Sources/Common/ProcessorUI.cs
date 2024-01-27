@@ -1,6 +1,7 @@
 using System;
 using Pixeye.Actors;
 using UnityEngine;
+using Random = Pixeye.Actors.Random;
 
 public class ProcessorUI : Processor, IReceive<SignalChangeHealth>, IReceive<SignalChangeHappiness>
 {
@@ -24,7 +25,7 @@ public class ProcessorUI : Processor, IReceive<SignalChangeHealth>, IReceive<Sig
             GameLayer.Send(new SignalPlaySound
             {
                 name = "healing",
-                volume = 1,
+                volume = 3,
                 pos = entity.transform.position,
             });
         }
@@ -43,13 +44,23 @@ public class ProcessorUI : Processor, IReceive<SignalChangeHealth>, IReceive<Sig
         var entity = arg.target;
         var id = GetPlayerID(entity);
         var cHappiness = entity.ComponentHappiness();
-
-        var happiness = cHappiness.count += arg.count;
-
+        var newHappiness = Mathf.Clamp(cHappiness.count + arg.count, 0, Config.MaxHappiness); // bound the happiness
+        if (cHappiness.count < Config.MaxHappiness / 2 && newHappiness > Config.MaxHappiness / 2)
+        {
+            GameLayer.Send(new SignalPlaySound
+            {
+                name = Random.NextBool() ? "laugh_cheering" : "laughs",
+                volume = 1,
+                pos = entity.transform.position,
+            });
+        }
+        
         if (entity.Has<ComponentPlayer>())
         {
             var hapBar = GameLayer.GetObj("HAP Bar " + id).GetComponent<HAPBar>();
-            hapBar.SetValue(happiness);
+            hapBar.SetValue(newHappiness);
         }
+        
+        cHappiness.count = newHappiness;
     }
 }

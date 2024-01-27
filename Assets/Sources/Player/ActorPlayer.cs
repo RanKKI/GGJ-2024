@@ -24,7 +24,7 @@ sealed class ActorPlayer : Actor
 
         entity.Set<ComponentObject>();
         entity.Set<ComponentHealth>();
-        entity.Set<ComponentHappiness>();
+        var cHap = entity.Set<ComponentHappiness>();
         entity.InitComponentObject();
         entity.Set(Tag.Player);
     }

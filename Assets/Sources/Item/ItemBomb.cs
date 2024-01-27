@@ -7,6 +7,7 @@ public class ItemBomb : Item
 
     public Rigidbody2D rb;
     public int damage = 5;
+    public int happiness = 3;
 
     protected override void Setup()
     {
@@ -40,6 +41,11 @@ public class ItemBomb : Item
         {
             target = targetPlayer,
             count = -damage,
+        });
+        GameLayer.Send(new SignalChangeHappiness
+        {
+            target = targetPlayer,
+            count = happiness,
         });
         GameLayer.Send(new SignalPlaySound
         {

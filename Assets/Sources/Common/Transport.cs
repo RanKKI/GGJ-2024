@@ -41,12 +41,24 @@ public class Transport : Actor
         gameObject.transform.position = openLocation;
 
         var obj = Play(Open, openGatePos);
+        GameLayer.Send(new SignalPlaySound
+        {
+            name = "teleportation",
+            volume = 0.8f,
+            pos = gameObject.transform.position,
+        });
         yield return new WaitForSeconds(1f);
         yield return MovePlayerTo(gameObject, openGatePos);
         playerObj.SetActive(false);
         yield return new WaitForSeconds(3f);
         RemoveObject(obj);
         var obj2 = Play(Open, closedGatePos);
+        GameLayer.Send(new SignalPlaySound
+        {
+            name = "teleportation",
+            volume = 0.8f,
+            pos = gameObject.transform.position,
+        });
         yield return new WaitForSeconds(1f);
         playerObj.SetActive(true);
         player.isActive = true;
