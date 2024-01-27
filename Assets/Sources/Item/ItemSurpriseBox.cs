@@ -7,17 +7,29 @@ public class ItemSurpriseBox : ItemBanana
     {
         return "SurpriseBox";
     }
-    
 
-    protected override void AfterStepOn()
+
+    protected override bool OnStepOn(ent targetPlayer)
     {
+        if (entity.Has(Tag.Item))
+        {
+            return false;
+        }
+        SendKarma(targetPlayer);
+
         GameLayer.Send(new SignalPlaySound
         {
             name = "box_open",
             volume = 2,
             pos = transform.position,
         });
-        PlayAnimator(2.0f, () => { Dispose(); });
+        PlayAnimator(0.8f, () => { Dispose(); SendBuff(targetPlayer); });
+        return true;
+    }
+
+    protected override void AfterStepOn()
+    {
+
     }
 
     protected override Buff[] BuffsWhenStepOn(ent targetPlayer)

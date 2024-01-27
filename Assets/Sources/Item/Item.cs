@@ -142,10 +142,7 @@ public class Item : Actor
         var animator = GetComponentInChildren<Animator>();
         animator.enabled = true;
         yield return new WaitForSeconds(duration);
-        if (animationCallback != null)
-        {
-            animationCallback();
-        }
+        animationCallback?.Invoke();
     }
 
 }

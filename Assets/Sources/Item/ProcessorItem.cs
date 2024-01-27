@@ -85,6 +85,7 @@ public class ProcessorItem : Processor, ITick, IReceive<SignalHoldItem>,
     public void HandleSignal(in SignalFireItem arg)
     {
 
+        var now = UnityEngine.Time.timeAsDouble;
         var item = arg.item;
         var player = arg.holder;
 
@@ -100,6 +101,7 @@ public class ProcessorItem : Processor, ITick, IReceive<SignalHoldItem>,
         itemComponent.Fire(cPlayer.lastHorDir);
 
         cItem.holder = default;
+        cItem.holdAt = now;
         cPlayer.item = null;
     }
 

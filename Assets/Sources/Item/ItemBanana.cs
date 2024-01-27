@@ -51,13 +51,18 @@ public class ItemBanana : Item
             return false;
         }
         SendKarma(targetPlayer);
+        SendBuff(targetPlayer);
+        AfterStepOn();
+        return true;
+    }
+
+    protected virtual void SendBuff(ent targetPlayer)
+    {
         GameLayer.Send(new SignalBuffAdded
         {
             player = targetPlayer,
             buffs = BuffsWhenStepOn(targetPlayer),
         });
-        AfterStepOn();
-        return true;
     }
 
     protected virtual void AfterStepOn()
