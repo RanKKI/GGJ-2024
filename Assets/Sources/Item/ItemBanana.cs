@@ -1,3 +1,4 @@
+using System;
 using Pixeye.Actors;
 
 using UnityEngine;
@@ -28,7 +29,7 @@ public class ItemBanana : Item
         transform.position = parent.transform.position + (Vector3)dir;
 
         // add force to 45deg
-        var targetDir = new Vector2(dir.normalized.x, 0.5f);
+        var targetDir = new Vector2(Math.Sign(dir.x), 1f);
         rb.AddForce(targetDir * 100);
 
         return true;
