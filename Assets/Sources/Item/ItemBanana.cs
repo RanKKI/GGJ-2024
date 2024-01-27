@@ -17,7 +17,6 @@ public class ItemBanana : Item
 
     public override bool Fire(Vector2 dir)
     {
-        Debug.Log("Fire Banana");
         base.Fire(dir);
         entity.Remove(Tag.Item);
         entity.Set(Tag.ItemTrigger);
@@ -29,8 +28,8 @@ public class ItemBanana : Item
         transform.SetParent(null);
         transform.position = parent.transform.position + (Vector3)dir;
 
-        // add force to 45deg
         var targetDir = new Vector2(Math.Sign(dir.x), 1f);
+        Debug.Log("Target Dir " + targetDir);
         rb.AddForce(targetDir * 100);
 
         return true;
