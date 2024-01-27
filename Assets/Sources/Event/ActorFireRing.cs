@@ -27,6 +27,12 @@ public class ActorFireRing : Actor
                 if (playerEntity.Has<ComponentPlayer>())
                 {
                     HappyAdding(playerEntity);
+                    GameLayer.Send(new SignalPlaySound
+                    {
+                        name = "fire_ring_success",
+                        volume = 1,
+                        pos = transform.position,
+                    });
                     transform.gameObject.Release();
                     Destroy(this);
                 }
@@ -41,6 +47,12 @@ public class ActorFireRing : Actor
                 {
                     HappyAdding(playerEntity);
                     Damaging(playerEntity);
+                    GameLayer.Send(new SignalPlaySound
+                    {
+                        name = "fire_ring_fail",
+                        volume = 1,
+                        pos = transform.position,
+                    });
                     transform.gameObject.Release();
                     Destroy(this);
                 }

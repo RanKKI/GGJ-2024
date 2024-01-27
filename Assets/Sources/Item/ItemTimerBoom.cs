@@ -36,12 +36,18 @@ public class ItemTimerBoom : Item
         var obj = entity.Get<ComponentItem>();
         PlayAnimator(1.08f, () =>
         {
-            Dispose();
             GameLayer.Send(new SignalChangeHealth
             {
                 count = -5,
                 target = obj.holder,
             });
+            Dispose();
+        });
+        GameLayer.Send(new SignalPlaySound
+        {
+            name = "bomb",
+            volume = 1,
+            pos = transform.position,
         });
     }
 

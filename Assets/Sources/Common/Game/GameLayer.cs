@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameLayer : Layer<GameLayer>
 {
-
+    public static ProcessorSound processorSound;
     public new Collider2D collider2D;
 
     protected override void Setup()
@@ -23,6 +23,8 @@ public class GameLayer : Layer<GameLayer>
         Add<ProcessorHealthCheck>();
 
         Add<ProcessorLife>();
+        
+        Add<ProcessorSound>();
 
         Game.Create.Board();
     }

@@ -28,11 +28,6 @@ public class ProcessorPlayer : Processor, ITick
             return;
         }
 
-        if (IsPlayerDisabledByVertigo(cPlayer))
-        {
-            return;
-        }
-
         var cObject = entity.ComponentObject();
 
         Vector2 dir = GetBuffWalk(cPlayer);
@@ -44,7 +39,7 @@ public class ProcessorPlayer : Processor, ITick
         
         cPlayer.dir = dir;
         var vel = cPlayer.rigidbody.velocity;
-        Debug.Log(cPlayer.name + " vel " + vel);
+        // Debug.Log(cPlayer.name + " vel " + vel);
         int x = Mathf.RoundToInt(dir.x);
         int y = Mathf.RoundToInt(vel.y * 10);
         cPlayer.ani.SetInteger("xDir", x);
@@ -52,6 +47,12 @@ public class ProcessorPlayer : Processor, ITick
         entity.GetMono<SpriteRenderer>().flipX = x > 0;
         
         if (dir == lastDir) return;
+        
+        if (IsPlayerDisabledByVertigo(cPlayer))
+        {
+            return;
+        }
+        
         lastDir = dir;
 
         if (dir.y == Vector2.up.y && cPlayer.canJump)
@@ -73,6 +74,12 @@ public class ProcessorPlayer : Processor, ITick
                 cPlayer.onCollidedWithGround -= toggleJump;
             };
             cPlayer.onCollidedWithGround = toggleJump;
+            GameLayer.Send(new SignalPlaySound
+            {
+                name = "jump",
+                volume = 1f,
+                pos = entity.transform.position,
+            });
         }
 
         if (dir.x == 0) return; // no horizontal movement

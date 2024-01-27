@@ -11,6 +11,12 @@ public class ItemSurpriseBox : ItemBanana
 
     protected override void AfterStepOn()
     {
+        GameLayer.Send(new SignalPlaySound
+        {
+            name = "box_open",
+            volume = 2,
+            pos = transform.position,
+        });
         PlayAnimator(2.0f, () => { Dispose(); });
     }
 

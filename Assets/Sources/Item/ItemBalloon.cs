@@ -35,7 +35,7 @@ public class ItemBalloon : Item
         // target position being the top of the screen
         var screenTop = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 1, 0)).y;
         var randDuration = Random.Range(minDuration, maxDuration);
-        var targetY = transform.position.y + randDuration / maxDuration * screenTop;
+        var targetY = randDuration / maxDuration * screenTop;
         var holder = entity.Get<ComponentItem>().holder;
         var cPlayer = holder.Get<ComponentPlayer>();
         cPlayer.rigidbody.gravityScale = 0;

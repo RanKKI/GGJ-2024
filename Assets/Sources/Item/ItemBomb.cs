@@ -41,6 +41,12 @@ public class ItemBomb : Item
             target = targetPlayer,
             count = -damage,
         });
+        GameLayer.Send(new SignalPlaySound
+        {
+            name = "bomb",
+            volume = 1,
+            pos = transform.position,
+        });
         Dispose();
     }
 
