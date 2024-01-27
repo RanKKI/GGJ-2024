@@ -5,9 +5,6 @@ using UnityEngine;
 public class ProcessorPlayer : Processor, ITick
 {
     readonly Group<ComponentObject, ComponentPlayer> source;
-    Action<Collision2D> toggleJump;
-    private ent jumpObserver;
-    private Vector2 lastDir;
 
     public void Tick(float dt)
     {
@@ -32,12 +29,6 @@ public class ProcessorPlayer : Processor, ITick
 
         Vector2 dir = GetBuffWalk(cPlayer);
 
-        if (UseItem(cPlayer))
-        {
-            FireItem(ref entity);
-        }
-        
-        cPlayer.dir = dir;
         var vel = cPlayer.rigidbody.velocity;
         // Debug.Log(cPlayer.name + " vel " + vel);
         int x = Mathf.RoundToInt(dir.x);
@@ -46,38 +37,43 @@ public class ProcessorPlayer : Processor, ITick
         cPlayer.ani.SetInteger("yDir", y);
         entity.GetMono<SpriteRenderer>().flipX = x > 0;
         
-        if (dir == lastDir) return;
-        
+        cPlayer.dir = dir;
+        if (UseItem(cPlayer))
+        {
+            FireItem(ref entity);
+        }
+
         if (IsPlayerDisabledByVertigo(cPlayer))
         {
             return;
         }
         
-        lastDir = dir;
+        cPlayer.lastDir = dir;
 
         if (dir.y == Vector2.up.y && cPlayer.canJump)
         {
             cPlayer.rigidbody.AddForce(Vector2.up * Config.JumpForce);
             cPlayer.canJump = false;
             cPlayer.rigidbody.ExcludeLayer(LayerMask.NameToLayer("GameBoard"));
-            jumpObserver = Observer.Add(cPlayer, c => c.rigidbody.velocity.y, value =>
+            
+            cPlayer.jumpObserver = Observer.Add(cPlayer, c => c.rigidbody.velocity.y, value =>
             {
                 if (value < 0)
                 {
                     cPlayer.rigidbody.IncludeLayer(LayerMask.NameToLayer("GameBoard"));
-                    jumpObserver.Release();
+                    cPlayer.jumpObserver.Release();
                 }
             });
-            toggleJump = (collision) =>
+            cPlayer.toggleJump = (collision) =>
             {
                 cPlayer.canJump = true;
-                cPlayer.onCollidedWithGround -= toggleJump;
+                cPlayer.onCollidedWithGround -= cPlayer.toggleJump;
             };
-            cPlayer.onCollidedWithGround = toggleJump;
+            cPlayer.onCollidedWithGround = cPlayer.toggleJump;
             GameLayer.Send(new SignalPlaySound
             {
                 name = "jump",
-                volume = 0.8f,
+                volume = 0.2f,
                 pos = entity.transform.position,
             });
         }
@@ -86,10 +82,7 @@ public class ProcessorPlayer : Processor, ITick
 
         var walkSpeed = Config.Speed * GetPlayerSpeed(cPlayer);
 
-        var curr = entity.transform.position;
-        var target = (walkSpeed * dt * dir) + (Vector2)curr;
-
-        Game.MoveTo(entity, target);
+        cPlayer.rigidbody.velocity = new Vector2(dir.x * walkSpeed, vel.y);
 
     }
 

@@ -88,7 +88,7 @@ public class ProcessorItem : Processor, ITick, IReceive<SignalHoldItem>,
         var item = arg.item;
         var player = arg.holder;
 
-        var cItem = item.ComponentItem();
+        var cItem = item.Get<ComponentItem>();
 
         if (!cItem.canFire) return;
 

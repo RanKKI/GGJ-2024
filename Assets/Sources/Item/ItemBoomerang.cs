@@ -2,29 +2,48 @@ using DG.Tweening;
 using Pixeye.Actors;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
+using Sequence = DG.Tweening.Sequence;
 
 public class ItemBoomerang : Item
 {
-
+    public int happinessHitSelf = 4;
+    public int happinessHitOther = 2;
     public Rigidbody2D rigidbody;
 
-    public GameObject renderer;
+    protected SpriteRenderer sp;
 
-    private bool spin = false;
-    private int rotation = 0;
+    public float rotateInterval = 0.5f;
+    private Tween rotateTween;
 
-    private Vector2 _velocity = Vector2.zero;
+    protected override void Setup()
+    {
+        base.Setup();
+        sp = GetComponentInChildren<SpriteRenderer>();
+    }
 
     public override bool Fire(Vector2 dir)
     {
         base.Fire(dir);
-        spin = true;
         GameObject parent = transform.parent.gameObject;
         if (parent == null) return false;
         transform.SetParent(null);
-        transform.position = parent.transform.position + (Vector3)dir;
-        _velocity = dir;
-        rigidbody.AddForce(dir * 200);
+        bool left = false;
+        var lastDir = entity.Get<ComponentItem>().holder.Get<ComponentPlayer>().lastDir;
+        if (dir.x != 0)
+        {
+            left = dir.x < 0;
+        }
+        else if (lastDir.x != 0)
+        {
+            left = lastDir.x < 0;
+        }
+        
+        Vector2 xDir = left ? Vector2.left : Vector2.right;
+        rigidbody.AddForce(xDir * 200);
+        transform.position = parent.transform.position + (Vector3)xDir;
+        rotateTween = sp.transform.DORotate(new Vector3(0f, 0f, 360f), rotateInterval, RotateMode.FastBeyond360)
+            .SetLoops(-1, LoopType.Restart).Play();
         
         GameLayer.Send(new SignalPlaySound
         {
@@ -39,25 +58,25 @@ public class ItemBoomerang : Item
     public override void OnPickUp()
     {
         base.OnPickUp();
-        spin = false;
+        rotateTween?.Kill();
         UpdateVelocity(Vector2.zero);
     }
 
-    void Update()
-    {
-        if (spin)
-        {
-            renderer.transform.rotation = Quaternion.Euler(0, 0, rotation);
-            rotation += 1;
-        }
-    }
-
+    private int bounceCount;
+    
     public override void OnOutOfScreen()
     {
         base.OnOutOfScreen();
+        if (bounceCount >= 1)
+        {
+            Dispose();
+            return;
+        }
         Vector2 reverseDir = rigidbody.velocity;
+        sp.flipX = !sp.flipX;
         reverseDir.Scale(new Vector2(-1, 0));
         UpdateVelocity(reverseDir);
+        bounceCount++;
     }
 
     private void UpdateVelocity(Vector2 vec)
@@ -72,18 +91,21 @@ public class ItemBoomerang : Item
             });
         }).Play();
         
-        _velocity = rigidbody.velocity.normalized;
         rigidbody.velocity = vec;
     }
 
     protected override void OnHitPlayer(ent targetPlayer)
     {
         var cItem = entity.ComponentItem();
-        if (cItem.holder == targetPlayer) return;
-        var targetRigibody2D = targetPlayer.GetMono<Rigidbody2D>();
-        if (targetRigibody2D != null)
+        GameLayer.Send(new SignalChangeHappiness
         {
-            targetRigibody2D.AddForce(_velocity * 100);
+            count = targetPlayer == cItem.owner ? happinessHitSelf : happinessHitOther,
+            target = cItem.holder,
+        });
+        var targetRigidbody2D = targetPlayer.GetMono<Rigidbody2D>();
+        if (targetRigidbody2D != null)
+        {
+            targetRigidbody2D.AddForce(rigidbody.velocity * 100);
         }
         Dispose();
     }

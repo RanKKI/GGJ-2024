@@ -7,4 +7,5 @@ public struct SignalChangeHealth
 {
 	public ent target;
 	public float count;
+	public bool ignoreDeath;
 }

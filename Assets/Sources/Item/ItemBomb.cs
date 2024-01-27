@@ -6,12 +6,15 @@ public class ItemBomb : Item
 {
 
     public Rigidbody2D rb;
+    public float velocity = 5f;
     public int damage = 5;
     public int happiness = 3;
 
     protected override void Setup()
     {
         base.Setup();
+        rb = GetComponent<Rigidbody2D>();
+        rb.velocity = Vector2.down * velocity;
     }
 
     protected override void SetTag()
@@ -22,6 +25,7 @@ public class ItemBomb : Item
     public override void OnOutOfScreen()
     {
         base.OnOutOfScreen();
+        Dispose();
     }
 
 

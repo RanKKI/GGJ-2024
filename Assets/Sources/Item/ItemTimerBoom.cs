@@ -3,7 +3,11 @@ using UnityEngine;
 
 public class ItemTimerBoom : Item
 {
-
+    public float minDuration = 6f;
+    public float maxDuration = 9f;
+    public float damage = 2f;
+    public int happiness = 6;
+    
     protected override void Setup()
     {
         base.Setup();
@@ -22,7 +26,8 @@ public class ItemTimerBoom : Item
 
     public override void OnPickUp()
     {
-        StartCoroutine(DelayTrigger(5f));
+        float randDuration = Random.Range(minDuration, maxDuration);
+        StartCoroutine(DelayTrigger(randDuration));
     }
 
     private IEnumerator DelayTrigger(float duration)
@@ -38,7 +43,12 @@ public class ItemTimerBoom : Item
         {
             GameLayer.Send(new SignalChangeHealth
             {
-                count = -5,
+                count = -damage,
+                target = obj.holder,
+            });
+            GameLayer.Send(new SignalChangeHappiness
+            {
+                count = happiness,
                 target = obj.holder,
             });
             Dispose();

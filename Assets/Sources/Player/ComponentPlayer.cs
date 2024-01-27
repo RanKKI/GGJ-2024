@@ -21,6 +21,8 @@ public class ComponentPlayer
     public Item item = default;
 
     public Vector2 dir = default;
+    
+    public Vector2 lastDir = default;
 
     public bool canJump = true;
 
@@ -32,6 +34,9 @@ public class ComponentPlayer
     public bool isActive = true;
 
 
+    public Action<Collision2D> toggleJump;
+    public ent jumpObserver;
+    
     public void AddBuff(Buff buff)
     {
         var list = new List<Buff>(buffs)

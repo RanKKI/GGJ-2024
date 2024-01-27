@@ -16,7 +16,7 @@ public class ProcessorUI : Processor, IReceive<SignalChangeHealth>, IReceive<Sig
         var entity = arg.target;
 
         var cPlayer = entity.ComponentPlayer();
-        if (cPlayer.IsDead())
+        if (cPlayer.IsDead() && !arg.ignoreDeath)
         {
             return;
         }
@@ -32,7 +32,7 @@ public class ProcessorUI : Processor, IReceive<SignalChangeHealth>, IReceive<Sig
             GameLayer.Send(new SignalPlaySound
             {
                 name = "healing",
-                volume = 3,
+                volume = 2,
                 pos = entity.transform.position,
             });
         }

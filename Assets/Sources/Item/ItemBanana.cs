@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class ItemBanana : Item
 {
-
+    public float faintTime = 2f;
+    public int happiness = 2;
     public Rigidbody2D rb;
     public BoxCollider2D boxCollider;
 
@@ -70,14 +71,16 @@ public class ItemBanana : Item
         var cItem = entity.ComponentItem();
         GameLayer.Send(new SignalChangeHappiness
         {
-            target = player,
-            count = cItem.owner == player ? 0 : 2,
+            target = cItem.owner,
+            count = cItem.owner == player ? 0 : happiness,
         });
     }
 
     protected virtual Buff[] BuffsWhenStepOn(ent targetPlayer)
     {
-        return new Buff[] { Buff.banana };
+        Buff buff = Buff.banana;
+        buff.duration = faintTime;
+        return new Buff[] { buff };
     }
 
 }

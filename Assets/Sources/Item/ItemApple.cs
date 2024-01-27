@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Pixeye.Actors;
 
 using UnityEngine;
@@ -6,11 +7,14 @@ public class ItemApple : Item
 {
 
     public Rigidbody2D rb;
+    public float velocity = 5f;
     public int recover = 3;
 
     protected override void Setup()
     {
         base.Setup();
+        rb = GetComponent<Rigidbody2D>();
+        rb.velocity = Vector2.down * velocity;
     }
 
     protected override void SetTag()
@@ -21,9 +25,9 @@ public class ItemApple : Item
     public override void OnOutOfScreen()
     {
         base.OnOutOfScreen();
+        Dispose();
     }
-
-
+    
     void OnTriggerEnter2D(Collider2D collision)
     {
         collision.gameObject.TryGetEntity(out var otherEntity);

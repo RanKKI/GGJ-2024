@@ -7,7 +7,7 @@ public class ItemSurpriseBox : ItemBanana
     {
         return "SurpriseBox";
     }
-
+    
 
     protected override void AfterStepOn()
     {

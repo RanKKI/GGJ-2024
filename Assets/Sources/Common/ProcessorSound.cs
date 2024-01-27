@@ -5,6 +5,8 @@ using UnityEngine;
 public class ProcessorSound : Processor, IReceive<SignalPlaySound>
 {
     protected AudioSource bgmSource;
+    
+    protected AudioSource effectSource;
 
     protected Dictionary<string, AudioClip> clips = new Dictionary<string, AudioClip>();
 
@@ -54,9 +56,10 @@ public class ProcessorSound : Processor, IReceive<SignalPlaySound>
     public ProcessorSound()
     {
         bgmSource = GameObject.Find("BackgroundMusic").GetComponent<AudioSource>();
+        effectSource = GameObject.Find("EffectMusic").GetComponent<AudioSource>();
         IsStop = false;
         BgmVolume = 1f;
-        EffectVolume = 2f;
+        EffectVolume = 0.5f;
     }
 
     public void PlayBGM(string res)
@@ -85,7 +88,15 @@ public class ProcessorSound : Processor, IReceive<SignalPlaySound>
             clip = Resources.Load<AudioClip>($"Sounds/{soundName}");
             clips.Add(soundName, clip);
         }
-        AudioSource.PlayClipAtPoint(clips[soundName], pos, volume * effectVolume);
+        clip = clips[soundName];
+        GameObject gameObject = new GameObject("One shot audio");
+        gameObject.transform.position = pos;
+        AudioSource audioSource = (AudioSource) gameObject.AddComponent(typeof (AudioSource));
+        audioSource.clip = clip;
+        audioSource.volume = volume * effectVolume;
+        audioSource.outputAudioMixerGroup = effectSource.outputAudioMixerGroup;
+        audioSource.Play();
+        Object.Destroy((Object) gameObject, clip.length * ((double) UnityEngine.Time.timeScale < 0.009999999776482582 ? 0.01f : UnityEngine.Time.timeScale));
     }
 
     public void HandleSignal(in SignalPlaySound arg)

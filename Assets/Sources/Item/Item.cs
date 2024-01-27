@@ -22,6 +22,9 @@ public class Item : Actor
 
         var cItem = entity.Get<ComponentItem>();
         cItem.name = GetName();
+        cItem.isActive = false;
+        cItem.canSnatch = false;
+        cItem.canFire = true;
     }
 
     protected virtual string GetName()
@@ -97,9 +100,9 @@ public class Item : Actor
         {
             OnHitGround();
         }
-        if (collision.gameObject.layer == LayerMask.NameToLayer("AirBlock"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Camera"))
         {
-            Debug.Log("撞墙");
+            OnOutOfScreen();
         }
     }
 

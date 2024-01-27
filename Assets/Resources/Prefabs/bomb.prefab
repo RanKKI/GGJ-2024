@@ -173,6 +173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _entity: 0
   prefabReferenceName: 
-  lifeTime: 10
   rb: {fileID: 5508203378519097600}
+  velocity: 3
   damage: 5
+  happiness: 3
