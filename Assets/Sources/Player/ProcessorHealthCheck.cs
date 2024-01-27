@@ -19,8 +19,7 @@ public class ProcessorHealthCheck : Processor, ITick, IReceive<SignalChangeDead>
             if (health.count <= 0)
             {
                 var cPlayer = entity.ComponentPlayer();
-                var isDead = cPlayer.buffs.FindIndex(b => b.name == BuffName.dead) >= 0;
-                if (isDead)
+                if (cPlayer.IsDead())
                 {
                     continue;
                 }

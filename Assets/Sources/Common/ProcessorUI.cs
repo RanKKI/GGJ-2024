@@ -13,6 +13,13 @@ public class ProcessorUI : Processor, IReceive<SignalChangeHealth>, IReceive<Sig
     public void HandleSignal(in SignalChangeHealth arg)
     {
         var entity = arg.target;
+
+        var cPlayer = entity.ComponentPlayer();
+        if (cPlayer.IsDead())
+        {
+            return;
+        }
+
         var cHealth = entity.ComponentHealth();
 
         Debug.Log("Health Change by: " + cHealth);
@@ -34,7 +41,7 @@ public class ProcessorUI : Processor, IReceive<SignalChangeHealth>, IReceive<Sig
             var hpBar = GameLayer.GetObj("HP Bar " + id).GetComponent<HPBar>();
             hpBar.SetHealth(newHealth);
         }
-        
+
         cHealth.count = newHealth;
     }
 
