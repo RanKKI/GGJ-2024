@@ -1,6 +1,7 @@
 using System.Collections;
 using Pixeye.Actors;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public delegate void AnimationCallback(); // declare delegate type
 
@@ -40,6 +41,26 @@ public class Item : Actor
     public virtual void OnOutOfScreen()
     {
 
+    }
+
+    public void SetConstraint(GameObject parent)
+    {
+        var constraint = gameObject.AddComponent<ParentConstraint>();
+        constraint.AddSource(new ConstraintSource
+        {
+            sourceTransform = parent.transform,
+            weight = 1
+        });
+        constraint.constraintActive = true;
+    }
+
+    public void RemoveConstraint()
+    {
+        var constraint = GetComponent<ParentConstraint>();
+        if (constraint == null) return;
+        constraint.RemoveSource(0);
+        constraint.constraintActive = false;
+        Destroy(constraint);
     }
 
     public virtual void OnPickUp()

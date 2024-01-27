@@ -75,6 +75,7 @@ public class ProcessorItem : Processor, ITick, IReceive<SignalHoldItem>,
 
         var actor = player.GetMono<ActorPlayer>();
 
+        itemComponent.SetConstraint(actor.itemHolder);
         itemComponent.transform.SetParent(actor.itemHolder.transform);
         itemComponent.transform.localPosition = Vector3.zero;
         itemComponent.transform.localRotation = Quaternion.identity;
@@ -94,6 +95,7 @@ public class ProcessorItem : Processor, ITick, IReceive<SignalHoldItem>,
         var itemComponent = item.GetMono<Item>();
 
         Debug.Log("itemComponent.Fire(cPlayer.dir);");
+        itemComponent.RemoveConstraint();
         itemComponent.Fire(cPlayer.dir);
 
         cItem.holder = default;
