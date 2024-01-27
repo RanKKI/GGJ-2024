@@ -22,6 +22,8 @@ sealed class ActorPlayer : Actor
     void OnCollisionEnter2D(Collision2D collision)
     {
         HandleCollisionWithItem(collision.collider);
+        var cPlayer = entity.Get<ComponentPlayer>();
+        cPlayer.onCollidedWithGround?.Invoke(collision);
     }
 
     void OnTriggerEnter2D(Collider2D collision)

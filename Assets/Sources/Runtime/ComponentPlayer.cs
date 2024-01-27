@@ -1,3 +1,4 @@
+using System;
 using Pixeye.Actors;
 using UnityEngine;
 
@@ -15,6 +16,8 @@ public class ComponentPlayer
     public Item item = default;
 
     public Vector2 dir = default;
+
+    public Action<Collision2D> onCollidedWithGround;
 
 }
 
