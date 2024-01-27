@@ -41,6 +41,12 @@ public class ComponentPlayer
         buffs = list.ToArray();
     }
 
+
+    public bool IsDead()
+    {
+        return buffs.FindIndex(b => b.name == BuffName.dead) >= 0;
+    }
+
 }
 
 #region HELPERS

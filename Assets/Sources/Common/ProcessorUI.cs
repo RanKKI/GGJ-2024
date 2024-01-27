@@ -14,6 +14,13 @@ public class ProcessorUI : Processor, IReceive<SignalChangeHealth>, IReceive<Sig
     public void HandleSignal(in SignalChangeHealth arg)
     {
         var entity = arg.target;
+
+        var cPlayer = entity.ComponentPlayer();
+        if (cPlayer.IsDead())
+        {
+            return;
+        }
+
         var cHealth = entity.ComponentHealth();
 
         Debug.Log("Health Change by: " + cHealth);
@@ -35,13 +42,21 @@ public class ProcessorUI : Processor, IReceive<SignalChangeHealth>, IReceive<Sig
             var hpBar = GameLayer.GetObj("HP Bar " + id).GetComponent<HPBar>();
             hpBar.SetHealth(newHealth);
         }
-        
+
         cHealth.count = newHealth;
     }
 
     public void HandleSignal(in SignalChangeHappiness arg)
     {
         var entity = arg.target;
+        
+        var cPlayer = entity.ComponentPlayer();
+        if (cPlayer.IsDead())
+        {
+            return;
+        }
+
+
         var id = GetPlayerID(entity);
         var cHappiness = entity.ComponentHappiness();
         var newHappiness = Mathf.Clamp(cHappiness.count + arg.count, 0, Config.MaxHappiness); // bound the happiness
