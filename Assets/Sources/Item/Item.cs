@@ -30,7 +30,7 @@ public class Item : Actor
 
     }
 
-    public virtual void Reset()
+    public virtual void OnPickUp()
     {
 
     }

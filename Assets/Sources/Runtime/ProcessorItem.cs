@@ -21,6 +21,7 @@ public class ProcessorItem : Processor, ITick, IReceive<SignalHoldItem>, IReceiv
     {
         if (entity == null || entity == default) return;
         var pos = entity.transform.localPosition;
+        Camera camera = Camera.main;
         if (Math.Abs(pos.x) >= ScreenSize.width)
         {
             Item item = entity.GetMono<Item>();
@@ -65,7 +66,7 @@ public class ProcessorItem : Processor, ITick, IReceive<SignalHoldItem>, IReceiv
         cItem.holdAt = now;
         cPlayer.item = itemComponent;
 
-        itemComponent.Reset();
+        itemComponent.OnPickUp();
 
         itemComponent.transform.SetParent(player.transform);
         itemComponent.transform.localPosition = Vector3.zero;

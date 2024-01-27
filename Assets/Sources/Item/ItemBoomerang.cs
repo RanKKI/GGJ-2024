@@ -22,9 +22,9 @@ public class ItemBoomerang : Item
         return true;
     }
 
-    public override void Reset()
+    public override void OnPickUp()
     {
-        base.Reset();
+        base.OnPickUp();
         UpdateVelocity(Vector2.zero);
     }
 

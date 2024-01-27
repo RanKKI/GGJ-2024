@@ -1,7 +1,8 @@
-public class Config
+using Sirenix.OdinInspector;
+
+public static class Config
 {
 
-    public static float JumpForce = 200f;
-    public static float Speed = 2f;
-
+    public static float JumpForce = 300f;
+    public static float Speed = 5f;
 }
