@@ -138,16 +138,14 @@ public class Item : Actor
 
     protected IEnumerator PlayAnimator2(float duration, float wait = 0f)
     {
-        yield return WaitFor(wait);
+        yield return new WaitForSeconds(wait);
         var animator = GetComponentInChildren<Animator>();
         animator.enabled = true;
-        yield return WaitFor(duration);
-    }
-
-    private IEnumerator WaitFor(float duration)
-    {
         yield return new WaitForSeconds(duration);
-        animationCallback();
+        if (animationCallback != null)
+        {
+            animationCallback();
+        }
     }
 
 }
