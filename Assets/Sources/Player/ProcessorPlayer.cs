@@ -7,6 +7,7 @@ public class ProcessorPlayer : Processor, ITick
     readonly Group<ComponentObject, ComponentPlayer> source;
     Action<Collision2D> toggleJump;
     private ent jumpObserver;
+    private Vector2 lastDir;
 
     public void Tick(float dt)
     {
@@ -40,10 +41,18 @@ public class ProcessorPlayer : Processor, ITick
         {
             FireItem(ref entity);
         }
-
-        if (dir == default) return;
-
+        
         cPlayer.dir = dir;
+        var vel = cPlayer.rigidbody.velocity;
+        Debug.Log(cPlayer.name + " vel " + vel);
+        int x = Mathf.RoundToInt(dir.x);
+        int y = Mathf.RoundToInt(vel.y * 10);
+        cPlayer.ani.SetInteger("xDir", x);
+        cPlayer.ani.SetInteger("yDir", y);
+        entity.GetMono<SpriteRenderer>().flipX = x > 0;
+        
+        if (dir == lastDir) return;
+        lastDir = dir;
 
         if (dir.y == Vector2.up.y && cPlayer.canJump)
         {

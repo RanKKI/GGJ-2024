@@ -20,7 +20,7 @@ public class ProcessorSpawner : Processor, ITick
 
     void Process(ref ent entity, float dt)
     {
-        if (entity == null || entity == default) return;
+        if (entity == null || entity == default || !entity.transform) return;
         var spawner = entity.ComponentSpawner();
         float fdt = UnityEngine.Time.deltaTime;
         spawner.timeSinceLastSpawn += fdt;

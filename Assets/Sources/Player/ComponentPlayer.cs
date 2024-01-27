@@ -16,6 +16,8 @@ public class ComponentPlayer
 
     public Collider2D col;
 
+    public Animator ani;
+
     public Item item = default;
 
     public Vector2 dir = default;
