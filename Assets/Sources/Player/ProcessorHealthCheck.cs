@@ -40,7 +40,13 @@ public class ProcessorHealthCheck : Processor, ITick, IReceive<SignalChangeDead>
         var target = arg.target;
         var cPlayer = target.ComponentPlayer();
         if (cPlayer == null) return;
-
+        
+        GameLayer.Send(new SignalPlaySound
+        {
+            name = "down",
+            volume = 2,
+            pos = target.transform.position,
+        });
         cPlayer.AddBuff(new Buff
         {
             name = BuffName.dead,

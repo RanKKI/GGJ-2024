@@ -58,6 +58,12 @@ public class ItemBanana : Item
 
     protected virtual void SendBuff(ent targetPlayer)
     {
+        GameLayer.Send(new SignalPlaySound
+        {
+            name = "down",
+            volume = 2,
+            pos = targetPlayer.transform.position,
+        });
         GameLayer.Send(new SignalBuffAdded
         {
             player = targetPlayer,

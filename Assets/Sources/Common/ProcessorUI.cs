@@ -64,7 +64,7 @@ public class ProcessorUI : Processor, IReceive<SignalChangeHealth>, IReceive<Sig
         {
             GameLayer.Send(new SignalPlaySound
             {
-                name = Random.NextBool() ? "laugh_cheering" : "laughs",
+                name = "halfVictory",
                 volume = 1,
                 pos = entity.transform.position,
             });

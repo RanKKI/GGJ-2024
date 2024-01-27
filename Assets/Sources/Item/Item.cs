@@ -3,6 +3,7 @@ using System.Collections;
 using Pixeye.Actors;
 using UnityEngine;
 using UnityEngine.Animations;
+using Random = Pixeye.Actors.Random;
 
 public delegate void AnimationCallback(); // declare delegate type
 
@@ -79,6 +80,12 @@ public class Item : Actor
     {
         entity.Get<ComponentItem>().onPickUp?.Invoke();
         entity.Remove<ComponentLife>();
+        GameLayer.Send(new SignalPlaySound
+        {
+            name = Random.NextBool() ? "pickup" : "pickup2",
+            volume = 1,
+            pos = transform.position,
+        });
     }
 
     void OnTriggerEnter2D(Collider2D collision)

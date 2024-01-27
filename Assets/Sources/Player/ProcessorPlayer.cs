@@ -1,6 +1,7 @@
 using System;
 using Pixeye.Actors;
 using UnityEngine;
+using Random = Pixeye.Actors.Random;
 
 public class ProcessorPlayer : Processor, ITick
 {
@@ -66,6 +67,15 @@ public class ProcessorPlayer : Processor, ITick
                 {
                     cPlayer.rigidbody.IncludeLayer(LayerMask.NameToLayer("GameBoard"));
                     cPlayer.jumpObserver.Release();
+                    if (Random.NextBool(10))
+                    {
+                        GameLayer.Send(new SignalPlaySound
+                        {
+                            name = "Ooowee",
+                            volume = 1f,
+                            pos = cPlayer.rigidbody.transform.position,
+                        });
+                    }
                 }
             });
             cPlayer.toggleJump = (collision) =>
