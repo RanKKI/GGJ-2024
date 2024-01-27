@@ -5,6 +5,7 @@ class HPBar : MonoCached
 {
 
     public Sprite fullHealthSprite;
+    public Sprite halfHealthSprite;
     public Sprite emptyHealthSprite;
 
     public bool leftToRight = true;
@@ -13,23 +14,37 @@ class HPBar : MonoCached
 
     public void SetHealth(float health)
     {
-        Debug.Log("Set Health to" + health);
-        health = Mathf.Abs(health);
         health = Mathf.Clamp(health, 0, maxHealth); // bound the health
-        for (int i = 0; i < health; i++)
+        for (int i = 0; i < maxHealth; i++)
         {
-            var idx = leftToRight ? i : transform.childCount - i - 1;
+            var idx = leftToRight ? i : maxHealth - i - 1;
             var child = transform.GetChild(idx);
+            Debug.Log("idx:" + idx + ",Set Health to" + health);
             if (child == null)
             {
                 Debug.LogError("child not found");
                 continue;
             }
             var spriteRenderer = child.GetComponent<SpriteRenderer>();
-            if (spriteRenderer != null)
+            if (spriteRenderer == null)
             {
-                spriteRenderer.sprite = idx < health ? fullHealthSprite : emptyHealthSprite;
+                continue;
             }
+
+
+            if (idx < (int)health)
+            {
+                spriteRenderer.sprite = fullHealthSprite;
+            }
+            else if (idx < health)
+            {
+                spriteRenderer.sprite = halfHealthSprite;
+            }
+            else
+            {
+                spriteRenderer.sprite = emptyHealthSprite;
+            }
+
         }
     }
 

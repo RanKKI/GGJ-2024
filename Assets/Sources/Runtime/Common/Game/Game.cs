@@ -13,7 +13,7 @@ public static partial class Game
     }
 
 
-    public static void ChangeHealth(in ent entity, int count)
+    public static void ChangeHealth(in ent entity, float count)
     {
         GameLayer.Send(new SignalChangeHealth
         {
@@ -21,7 +21,7 @@ public static partial class Game
             count = count
         });
     }
-    
+
     public static void ChangeHappiness(in ent entity, int count)
     {
         GameLayer.Send(new SignalChangeHappiness

@@ -47,7 +47,7 @@ public class ProcessorPlayer : Processor, ITick
 
         if (dir == Vector2.down)
         {
-            Game.ChangeHealth(entity, -1);
+            Game.ChangeHealth(entity, -0.5f);
             Game.ChangeHappiness(entity, -1);
             return;
         }

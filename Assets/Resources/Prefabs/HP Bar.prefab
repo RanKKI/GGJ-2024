@@ -893,10 +893,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fullHealthSprite: {fileID: -1233851174, guid: db3e52879c947460096bd0337a9a091b, type: 3}
+  halfHealthSprite: {fileID: -1809240053, guid: db3e52879c947460096bd0337a9a091b, type: 3}
   emptyHealthSprite: {fileID: 414387288, guid: db3e52879c947460096bd0337a9a091b, type: 3}
   leftToRight: 1
-  maxHealth: 100
-  currentHealth: 100
+  maxHealth: 10
 --- !u!1 &9039325628565945335
 GameObject:
   m_ObjectHideFlags: 0
