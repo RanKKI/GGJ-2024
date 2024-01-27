@@ -6,6 +6,7 @@ public class ProcessorPlayer : Processor, ITick
 {
     readonly Group<ComponentObject, ComponentPlayer> source;
     Action<Collision2D> toggleJump;
+    private ent jumpObserver;
 
     public void Tick(float dt)
     {
@@ -45,6 +46,15 @@ public class ProcessorPlayer : Processor, ITick
         {
             cPlayer.rigidbody.AddForce(Vector2.up * Config.JumpForce);
             cPlayer.canJump = false;
+            cPlayer.rigidbody.ExcludeLayer(LayerMask.NameToLayer("GameBoard"));
+            jumpObserver = Observer.Add(cPlayer, c => c.rigidbody.velocity.y, value =>
+            {
+                if (value < 0)
+                {
+                    cPlayer.rigidbody.IncludeLayer(LayerMask.NameToLayer("GameBoard"));
+                    jumpObserver.Release();
+                }
+            });
             toggleJump = (collision) =>
             {
                 cPlayer.canJump = true;

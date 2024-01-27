@@ -209,7 +209,7 @@ GameObject:
   - component: {fileID: 79607016}
   - component: {fileID: 79607015}
   - component: {fileID: 79607014}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: L1Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -486,7 +486,7 @@ GameObject:
   - component: {fileID: 191604343}
   - component: {fileID: 191604342}
   - component: {fileID: 191604341}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: L2Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -971,7 +971,7 @@ GameObject:
   - component: {fileID: 586969030}
   - component: {fileID: 586969029}
   - component: {fileID: 586969031}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: L3Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1307,7 +1307,7 @@ GameObject:
   - component: {fileID: 804584549}
   - component: {fileID: 804584548}
   - component: {fileID: 804584547}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1933,7 +1933,7 @@ GameObject:
   - component: {fileID: 1299778745}
   - component: {fileID: 1299778744}
   - component: {fileID: 1299778743}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: L2Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2303,7 +2303,7 @@ GameObject:
   - component: {fileID: 1391694076}
   - component: {fileID: 1391694075}
   - component: {fileID: 1391694074}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: GroundStage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2433,7 +2433,7 @@ GameObject:
   - component: {fileID: 1483169734}
   - component: {fileID: 1483169733}
   - component: {fileID: 1483169732}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: L1Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3319,7 +3319,7 @@ GameObject:
   - component: {fileID: 2026492626}
   - component: {fileID: 2026492628}
   - component: {fileID: 2026492627}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: L5Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3449,7 +3449,7 @@ GameObject:
   - component: {fileID: 2038290030}
   - component: {fileID: 2038290029}
   - component: {fileID: 2038290028}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: L4Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3579,7 +3579,7 @@ GameObject:
   - component: {fileID: 2054060730}
   - component: {fileID: 2054060729}
   - component: {fileID: 2054060728}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: L4Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}

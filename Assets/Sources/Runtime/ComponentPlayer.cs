@@ -14,6 +14,8 @@ public class ComponentPlayer
 
     public Rigidbody2D rigidbody;
 
+    public Collider2D col;
+
     public Item item = default;
 
     public Vector2 dir = default;

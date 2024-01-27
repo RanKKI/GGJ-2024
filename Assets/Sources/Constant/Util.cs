@@ -78,3 +78,34 @@ public static class Util
         entity = actor.entity;
     }
 }
+
+public static class LayerUtil
+{
+    public static void IncludeLayer(this Rigidbody2D rb, int layer)
+    {
+        int layerMask = 1 << layer;
+        rb.includeLayers |= layerMask;
+        rb.excludeLayers &= ~(layerMask);
+    }
+        
+    public static void ExcludeLayer(this Rigidbody2D rb, int layer)
+    {
+        int layerMask = 1 << layer;
+        rb.excludeLayers |= layerMask;
+        rb.includeLayers &= ~(layerMask);
+    }
+        
+    public static void IncludeLayer(this Collider2D col, int layer)
+    {
+        int layerMask = 1 << layer;
+        col.includeLayers |= layerMask;
+        col.excludeLayers &= ~(layerMask);
+    }
+        
+    public static void ExcludeLayer(this Collider2D col, int layer)
+    {
+        int layerMask = 1 << layer;
+        col.excludeLayers |= layerMask;
+        col.includeLayers &= ~(layerMask);
+    }
+}
