@@ -49,19 +49,21 @@ public class ItemBanana : Item
         {
             return;
         }
-        Buff[] buffs = {
-                Buff.banana,
-            };
         GameLayer.Send(new SignalBuffAdded
         {
             player = targetPlayer,
-            buffs = buffs,
+            buffs = BuffsWhenStepOn(targetPlayer),
         });
         GameLayer.Send(new SignalDisposeItem
         {
             item = entity,
             obj = gameObject,
         });
+    }
+
+    protected virtual Buff[] BuffsWhenStepOn(ent targetPlayer)
+    {
+        return new Buff[] { Buff.banana };
     }
 
 }

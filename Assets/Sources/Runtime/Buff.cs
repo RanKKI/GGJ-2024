@@ -14,6 +14,8 @@ public class Buff
 
     public double duration = 0;
 
+    public Vector2 autoWalkDir = Vector2.zero;
+
     public double validTo = -1; // Timestamp, -1 alway valid
 
     // 眩晕
@@ -39,6 +41,7 @@ public class Buff
             vertigo = vertigo,
             validTo = validTo,
             duration = duration,
+            autoWalkDir = autoWalkDir,
         };
     }
 }

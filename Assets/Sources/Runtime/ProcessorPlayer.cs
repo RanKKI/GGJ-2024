@@ -30,7 +30,7 @@ public class ProcessorPlayer : Processor, ITick
 
         var cObject = entity.ComponentObject();
 
-        var dir = cPlayer.playerType == PlayerType.Player1 ? CheckInput1() : CheckInput2();
+        Vector2 dir = GetBuffWalk(cPlayer);
 
         if (UseItem(cPlayer))
         {
@@ -52,7 +52,7 @@ public class ProcessorPlayer : Processor, ITick
             };
             cPlayer.onCollidedWithGround = toggleJump;
         }
-        
+
         if (dir.x == 0) return; // no horizontal movement
 
         var walkSpeed = Config.Speed * GetPlayerSpeed(cPlayer);
@@ -89,6 +89,17 @@ public class ProcessorPlayer : Processor, ITick
     bool IsPlayerDisabledByVertigo(ComponentPlayer cPlayer)
     {
         return cPlayer.buffs.FindIndex(buff => buff.vertigo) >= 0;
+    }
+
+    Vector2 GetBuffWalk(ComponentPlayer cPlayer)
+    {
+        var idx = cPlayer.buffs.FindIndex(buff => buff.autoWalkDir != Vector2.zero);
+        if (idx >= 0)
+        {
+            return cPlayer.buffs[idx].autoWalkDir;
+        }
+        return cPlayer.playerType == PlayerType.Player1 ? CheckInput1() : CheckInput2();
+
     }
 
     void FireItem(ref ent entity)
