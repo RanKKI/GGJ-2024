@@ -9,9 +9,12 @@ class HPBar : MonoCached
 
     public bool leftToRight = true;
 
+    public int maxHealth = 10;
+
     public void SetHealth(float health)
     {
         health = Mathf.Abs(health);
+        health = Mathf.Clamp(health, 0, maxHealth); // bound the health
         Debug.Log("HPBar: " + health);
         for (int i = 0; i < health; i++)
         {
