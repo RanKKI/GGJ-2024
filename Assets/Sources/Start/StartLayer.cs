@@ -1,5 +1,6 @@
 using Pixeye.Actors;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class StartLayer : Layer<GameLayer>
@@ -23,19 +24,39 @@ public class StartLayer : Layer<GameLayer>
         index++;
         if (index >= Content.contents.Length)
         {
-            onFinished();
+            OnFinished();
             return;
         }
 
         Content content = Content.contents[index];
+        if (content.action != CanvasAction.none)
+        {
+            ExecuteAction(content.action);
+            Next();
+            return;
+        }
         text.text = content.text;
         SpriteRenderer.sprite = content.playerType == PlayerType.Player1 ? Player1 : Player2;
     }
 
 
-    private void onFinished()
+    private void ExecuteAction(CanvasAction action)
     {
+        switch (action)
+        {
+            case CanvasAction.ChangeSceneTo1:
+                SceneManager.LoadScene("Scene 1");
+                break;
+            case CanvasAction.ChangeSceneTo2:
+                SceneManager.LoadScene("Scene 2");
+                break;
+        }
+    }
 
+
+    private void OnFinished()
+    {
+        SceneManager.LoadScene("Scene Default");
     }
 
 
