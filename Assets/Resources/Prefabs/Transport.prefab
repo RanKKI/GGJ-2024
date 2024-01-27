@@ -46,6 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _entity: 0
   prefabReferenceName: 
-  Open: {fileID: 6012162831416141359, guid: 21e0ca393cef5524ca3b2b0ea4511cb6, type: 3}
+  Open: {fileID: 8209217069708744624, guid: 288177cc344f91846a1d89fefd66c437, type: 3}
   Loading: {fileID: 8327547551407794083, guid: faf592bc1bb93c949a01cb8f8a4b5598, type: 3}
   Closed: {fileID: 7684743907321382781, guid: 2b03db19a56b4d44cb9524631bf1d76d, type: 3}

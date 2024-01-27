@@ -8,8 +8,6 @@ public class Transport : Actor
 {
 
     public GameObject Open;
-    public GameObject Loading;
-    public GameObject Closed;
 
     protected override void Setup()
     {
@@ -33,6 +31,7 @@ public class Transport : Actor
         var openLocation = (Vector2)gameObject.transform.position;
         var heightOffset = new Vector2(0, 2f);
         var player = gameObject.ComponentPlayer();
+        var playerObj = gameObject.GetMono<ActorPlayer>().gameObject;
 
         player.isActive = false;
 
@@ -41,50 +40,30 @@ public class Transport : Actor
 
         gameObject.transform.position = openLocation;
 
-        yield return OpenGateAt(openGatePos);
-        yield return HoldGateAt(openGatePos, 0.5f);
+        var obj = Play(Open, openGatePos);
+        yield return new WaitForSeconds(1f);
         yield return MovePlayerTo(gameObject, openGatePos);
-        yield return CloseGateAt(openGatePos);
-        gameObject.transform.position = closedGatePos;
-
-        yield return OpenGateAt(closedGatePos);
+        playerObj.SetActive(false);
+        yield return new WaitForSeconds(3f);
+        RemoveObject(obj);
+        var obj2 = Play(Open, closedGatePos);
+        yield return new WaitForSeconds(1f);
+        playerObj.SetActive(true);
         player.isActive = true;
-        yield return HoldGateAt(closedGatePos, 0.5f);
-        yield return CloseGateAt(closedGatePos);
+        gameObject.transform.position = closedGatePos;
+        yield return new WaitForSeconds(3f);
+        RemoveObject(obj2);
     }
 
     private IEnumerator MovePlayerTo(ent player, Vector2 pos, bool reverse = false)
     {
-        Log("MovePlayerTo");
         float speed = 0.43f;
         player.transform.DOMoveY(pos.y, speed)
             .SetEase(reverse ? Ease.OutQuint : Ease.InQuint);
-        yield return new WaitForSeconds(speed - 0.2f);
+        yield return new WaitForSeconds(speed);
     }
 
-    private IEnumerator OpenGateAt(Vector2 pos)
-    {
-        Log("OpenGateAt");
-        var obj = Play(Open, pos);
-        yield return new WaitForSeconds(1f);
-        RemoveObject(obj);
-    }
 
-    private IEnumerator HoldGateAt(Vector2 pos, float duration)
-    {
-        Log("HoldGateAt");
-        var obj = Play(Loading, pos);
-        yield return new WaitForSeconds(duration);
-        RemoveObject(obj);
-    }
-
-    private IEnumerator CloseGateAt(Vector2 pos)
-    {
-        Log("CloseGateAt");
-        var obj = Play(Closed, pos);
-        yield return new WaitForSeconds(1.5f);
-        RemoveObject(obj);
-    }
 
     private void RemoveObject(GameObject gameObject)
     {
