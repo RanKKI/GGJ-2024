@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using Pixeye.Actors;
+using UnityEngine;
 
 public class ProcessorHealthCheck : Processor, ITick, IReceive<SignalChangeDead>, IReceive<SignalBuffRemoved>
 {
@@ -9,6 +11,7 @@ public class ProcessorHealthCheck : Processor, ITick, IReceive<SignalChangeDead>
     public void Tick(float dt)
     {
         if (source.length <= 0) return;
+        List<ent> winners = new List<ent>();
         for (var i = 0; i < source.length; i++)
         {
             ref var entity = ref source.entities[i];
@@ -23,8 +26,14 @@ public class ProcessorHealthCheck : Processor, ITick, IReceive<SignalChangeDead>
                 }
                 GameLayer.Send(new SignalChangeDead { target = entity });
             }
-        }
 
+            var happiness = entity.ComponentHappiness();
+            if (happiness.count >= Config.MaxHappiness)
+            {
+                winners.Add(entity);
+            }
+        }
+        GameLayer.Send(new SignalGameEnd { winner = winners.ToArray() });
     }
 
     public void HandleSignal(in SignalChangeDead arg)
