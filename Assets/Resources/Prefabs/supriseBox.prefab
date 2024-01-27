@@ -94,6 +94,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _entity: 0
   prefabReferenceName: 
+  lifeTime: 10
   rb: {fileID: 3482479086968714276}
   boxCollider: {fileID: 8561887901114273220}
 --- !u!50 &3482479086968714276
@@ -178,6 +179,14 @@ PrefabInstance:
     - target: {fileID: 984161361067088136, guid: 6ebd538d9761e6142894f94146061b2a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3313550250679874609, guid: 6ebd538d9761e6142894f94146061b2a, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3313550250679874609, guid: 6ebd538d9761e6142894f94146061b2a, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 909227339
       objectReference: {fileID: 0}
     - target: {fileID: 7119333954943099656, guid: 6ebd538d9761e6142894f94146061b2a, type: 3}
       propertyPath: m_Name

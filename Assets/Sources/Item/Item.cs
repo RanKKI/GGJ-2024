@@ -114,6 +114,7 @@ public class Item : Actor
 
     protected void Dispose()
     {
+        entity.Remove<ComponentLife>();
         Debug.Log("Dispose" + entity.ComponentItem().name);
         GameLayer.Send(new SignalDisposeItem
         {

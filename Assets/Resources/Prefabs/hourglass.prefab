@@ -121,6 +121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _entity: 0
   prefabReferenceName: 
+  lifeTime: 10
   rb: {fileID: 2126488249095596549}
   boxCollider: {fileID: 4999564086561663955}
 --- !u!1001 &3733514178664437970
@@ -134,6 +135,14 @@ PrefabInstance:
     - target: {fileID: 925340973915696407, guid: d28d5bf84654c5a4fbe23818382d417e, type: 3}
       propertyPath: m_Name
       value: Hourglass-sheet_0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2673434878187114554, guid: d28d5bf84654c5a4fbe23818382d417e, type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2673434878187114554, guid: d28d5bf84654c5a4fbe23818382d417e, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 909227339
       objectReference: {fileID: 0}
     - target: {fileID: 3920618949669829362, guid: d28d5bf84654c5a4fbe23818382d417e, type: 3}
       propertyPath: m_LocalPosition.x
