@@ -24,7 +24,7 @@ public class ProcessorPlayer : Processor, ITick
 
         var dir = cPlayer.playerType == PlayerType.Player1 ? CheckInput1() : CheckInput2();
 
-        if (UseItem())
+        if (UseItem(cPlayer))
         {
             FireItem(ref entity);
         }
@@ -71,17 +71,6 @@ public class ProcessorPlayer : Processor, ITick
         var item = cPlayer.item;
         if (item == null) return;
 
-        // if (item.Fire(cPlayer.dir))
-        // {
-        //     // cPlayer.item = null;
-        //     GameLayer.Send(new SignalFireItem
-        //     {
-        //         item = item.entity,
-        //         holder = entity
-        //     });
-        //     return;
-        // }
-
         GameLayer.Send(new SignalFireItem
         {
             item = item.entity,
@@ -90,9 +79,10 @@ public class ProcessorPlayer : Processor, ITick
     }
 
 
-    bool UseItem()
+    bool UseItem(ComponentPlayer cPlayer)
     {
-        return Input.GetKeyDown(KeyCode.Space);
+        return Input.GetKeyDown(
+            cPlayer.playerType == PlayerType.Player1 ? KeyCode.Q : KeyCode.LeftShift);
     }
 
     Vector2 CheckInput1()

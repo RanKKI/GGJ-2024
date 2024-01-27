@@ -48,7 +48,6 @@ public class Item : Actor
         var otherEntity = collision.gameObject.GetEntity();
         if (otherEntity.Has(Tag.Player))
         {
-            Debug.Log("OnTriggerEnter2D");
             OnHitPlayer(otherEntity);
         }
     }

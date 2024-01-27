@@ -20,8 +20,14 @@ public partial class Game
             player1.gameObject.name = "Player1";
             player2.gameObject.name = "Player2";
 
-            player1.entity.ComponentPlayer().playerType = PlayerType.Player1;
-            player2.entity.ComponentPlayer().playerType = PlayerType.Player2;
+            var cPlayer1 = player1.entity.ComponentPlayer();
+            var cPlayer2 = player2.entity.ComponentPlayer();
+
+            cPlayer1.name = "Player1";
+            cPlayer1.playerType = PlayerType.Player1;
+            
+            cPlayer2.name = "Player2";
+            cPlayer2.playerType = PlayerType.Player2;
 
         }
 

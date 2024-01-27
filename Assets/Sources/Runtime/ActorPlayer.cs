@@ -30,7 +30,9 @@ sealed class ActorPlayer : Actor
 
     void HandleCollisionWithItem(Collider2D collision)
     {
-        Debug.Log(gameObject.name + " HandleCollisionWithItem: " + collision.gameObject.name);
+        var cPlayer = entity.ComponentPlayer();
+        Debug.Log(name + " Collision " + collision.gameObject.name);
+        Debug.Log(name + " Hold " + cPlayer.item);
         ent otherEntity;
         try
         {
@@ -44,13 +46,15 @@ sealed class ActorPlayer : Actor
         ent itemEnt = default;
         if (otherEntity.Has(Tag.Item))
         {
-            itemEnt = otherEntity;
-            var cItem = otherEntity.Get<ComponentItem>();
-            isSuccessHoldItem = !cItem.isActive;
+            if (cPlayer.item == null)
+            {
+                itemEnt = otherEntity;
+                var cItem = otherEntity.Get<ComponentItem>();
+                isSuccessHoldItem = !cItem.isActive;
+            }
         }
         else if (otherEntity.Has(Tag.Player))
         {
-            Debug.Log(gameObject.name + " StealItemFromPlayer: " + collision.gameObject.name);
             var item = StealItemFromPlayer(otherEntity);
             isSuccessHoldItem = item != default;
             itemEnt = item;

@@ -48,12 +48,12 @@ public class ItemBoomerang : Item
         if (targetRigibody2D != null)
         {
             targetRigibody2D.AddForce(_velocity * 100);
-            GameLayer.Send(new SignalDisposeItem
-            {
-                item = entity,
-                obj = gameObject,
-            });
         }
+        GameLayer.Send(new SignalDisposeItem
+        {
+            item = entity,
+            obj = gameObject,
+        });
     }
 
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class ComponentPlayer
 {
 
+    public string name = "";
     public ent observer = default;
 
     public PlayerType playerType = default;

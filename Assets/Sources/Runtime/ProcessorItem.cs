@@ -33,13 +33,15 @@ public class ProcessorItem : Processor, ITick, IReceive<SignalHoldItem>, IReceiv
 
     public void HandleSignal(in SignalHoldItem arg)
     {
-        Debug.Log("Handle SignalHoldItem");
         var item = arg.item;
         var player = arg.holder;
+
         var now = UnityEngine.Time.timeAsDouble;
 
         var cItem = item.ComponentItem();
         var cPlayer = player.ComponentPlayer();
+
+        Debug.Log(cPlayer.name + " hold item " + cItem);
         var itemComponent = item.GetMono<Item>();
 
         if (cPlayer.item != null)
@@ -72,6 +74,7 @@ public class ProcessorItem : Processor, ITick, IReceive<SignalHoldItem>, IReceiv
 
     public void HandleSignal(in SignalFireItem arg)
     {
+
         var item = arg.item;
         var player = arg.holder;
 
@@ -96,7 +99,7 @@ public class ProcessorItem : Processor, ITick, IReceive<SignalHoldItem>, IReceiv
         }
         cItem.holder = default;
         cItem.isActive = false;
-        GameLayer.Destroy(arg.obj);
         item.Release();
+        GameLayer.Destroy(arg.obj);
     }
 }
