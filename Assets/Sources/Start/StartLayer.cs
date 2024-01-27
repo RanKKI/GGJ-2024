@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Pixeye.Actors;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,6 +11,9 @@ public class StartLayer : Layer<GameLayer>
     public Text text;
     public Image SpriteRenderer;
     public Image NameRenderer;
+
+    public Image Overlay;
+
     public Sprite Player1;
     public Sprite Player2;
     public Sprite Monster;
@@ -38,7 +42,6 @@ public class StartLayer : Layer<GameLayer>
         if (content.action != CanvasAction.none)
         {
             ExecuteAction(content.action);
-            Next();
             return;
         }
         text.text = content.text;
@@ -71,7 +74,14 @@ public class StartLayer : Layer<GameLayer>
         switch (action)
         {
             case CanvasAction.ChangeSceneTo1:
-                SceneManager.LoadScene("Scene 1");
+                Overlay.DOColor(Color.black, 1f).OnComplete(() =>
+                {
+                    Overlay.DOColor(Color.clear, 1f)
+                        .OnComplete(() =>
+                        {
+                            Next();
+                        });
+                });
                 break;
             case CanvasAction.ChangeSceneTo2:
                 SceneManager.LoadScene("Scene 2");
