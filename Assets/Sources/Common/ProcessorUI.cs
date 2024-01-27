@@ -48,6 +48,14 @@ public class ProcessorUI : Processor, IReceive<SignalChangeHealth>, IReceive<Sig
     public void HandleSignal(in SignalChangeHappiness arg)
     {
         var entity = arg.target;
+        
+        var cPlayer = entity.ComponentPlayer();
+        if (cPlayer.IsDead())
+        {
+            return;
+        }
+
+
         var id = GetPlayerID(entity);
         var cHappiness = entity.ComponentHappiness();
 
