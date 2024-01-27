@@ -2,7 +2,7 @@ using Pixeye.Actors;
 
 public class ComponentHealth
 {
-    public int count;
+    public int count = 10;
 }
 
 #region HELPERS

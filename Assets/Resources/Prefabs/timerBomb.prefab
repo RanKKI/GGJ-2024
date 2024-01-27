@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8784999531135020573}
   - component: {fileID: 2396261858231591184}
   m_Layer: 0
-  m_Name: boom
+  m_Name: timerBomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
