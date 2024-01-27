@@ -125,12 +125,18 @@ public class Item : Actor
 
     protected AnimationCallback animationCallback; // to store the function
 
-    protected void PlayAnimator(float duration, AnimationCallback animationCallback)
+    protected void PlayAnimator(float duration, AnimationCallback animationCallback, float wait = 0f)
     {
         this.animationCallback = animationCallback;
+        StartCoroutine(PlayAnimator2(duration, wait));
+    }
+
+    protected IEnumerator PlayAnimator2(float duration, float wait = 0f)
+    {
+        yield return WaitFor(wait);
         var animator = GetComponentInChildren<Animator>();
         animator.enabled = true;
-        StartCoroutine(WaitFor(duration));
+        yield return WaitFor(duration);
     }
 
     private IEnumerator WaitFor(float duration)
