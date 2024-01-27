@@ -44,11 +44,11 @@ public class ItemBanana : Item
         }
     }
 
-    protected void OnStepOn(ent targetPlayer)
+    protected virtual bool OnStepOn(ent targetPlayer)
     {
         if (entity.Has(Tag.Item))
         {
-            return;
+            return false;
         }
         SendKarma(targetPlayer);
         GameLayer.Send(new SignalBuffAdded
@@ -56,6 +56,12 @@ public class ItemBanana : Item
             player = targetPlayer,
             buffs = BuffsWhenStepOn(targetPlayer),
         });
+        AfterStepOn();
+        return true;
+    }
+
+    protected virtual void AfterStepOn()
+    {
         Dispose();
     }
 

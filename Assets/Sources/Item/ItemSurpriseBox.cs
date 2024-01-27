@@ -8,6 +8,12 @@ public class ItemSurpriseBox : ItemBanana
         return "SurpriseBox";
     }
 
+
+    protected override void AfterStepOn()
+    {
+        PlayAnimator(2.0f, () => { Dispose(); });
+    }
+
     protected override Buff[] BuffsWhenStepOn(ent targetPlayer)
     {
 
