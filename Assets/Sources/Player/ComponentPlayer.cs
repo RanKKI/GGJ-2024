@@ -20,7 +20,7 @@ public class ComponentPlayer
 
     public Item item = default;
 
-    public Vector2 dir = default;
+    public Vector2 lastHorDir = default;
     
     public Vector2 lastDir = default;
 

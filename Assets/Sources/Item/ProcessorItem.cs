@@ -97,7 +97,7 @@ public class ProcessorItem : Processor, ITick, IReceive<SignalHoldItem>,
 
         Debug.Log("itemComponent.Fire(cPlayer.dir);");
         itemComponent.RemoveConstraint();
-        itemComponent.Fire(cPlayer.dir);
+        itemComponent.Fire(cPlayer.lastHorDir);
 
         cItem.holder = default;
         cPlayer.item = null;

@@ -36,8 +36,12 @@ public class ProcessorPlayer : Processor, ITick
         cPlayer.ani.SetInteger("xDir", x);
         cPlayer.ani.SetInteger("yDir", y);
         entity.GetMono<SpriteRenderer>().flipX = x > 0;
-        
-        cPlayer.dir = dir;
+
+        if (dir.x != 0)
+        {
+            cPlayer.lastHorDir = dir;
+        }
+
         if (UseItem(cPlayer))
         {
             FireItem(ref entity);
@@ -47,7 +51,7 @@ public class ProcessorPlayer : Processor, ITick
         {
             return;
         }
-        
+
         cPlayer.lastDir = dir;
 
         if (dir.y == Vector2.up.y && cPlayer.canJump)
@@ -55,7 +59,7 @@ public class ProcessorPlayer : Processor, ITick
             cPlayer.rigidbody.AddForce(Vector2.up * Config.JumpForce);
             cPlayer.canJump = false;
             cPlayer.rigidbody.ExcludeLayer(LayerMask.NameToLayer("GameBoard"));
-            
+
             cPlayer.jumpObserver = Observer.Add(cPlayer, c => c.rigidbody.velocity.y, value =>
             {
                 if (value < 0)

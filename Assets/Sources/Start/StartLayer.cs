@@ -76,11 +76,8 @@ public class StartLayer : Layer<GameLayer>
             case CanvasAction.ChangeSceneTo1:
                 Overlay.DOColor(Color.black, 1f).OnComplete(() =>
                 {
-                    Overlay.DOColor(Color.clear, 1f)
-                        .OnComplete(() =>
-                        {
-                            Next();
-                        });
+                    Next();
+                    Overlay.DOColor(Color.clear, 1f);
                 });
                 break;
             case CanvasAction.ChangeSceneTo2:
