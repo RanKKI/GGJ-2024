@@ -23,10 +23,6 @@ public class Item : Actor
 
         var cItem = entity.Get<ComponentItem>();
         cItem.name = GetName();
-        
-        var cLife = entity.Set<ComponentLife>();
-        cLife.lifeTime = lifeTime;
-        cLife.liveTime = 0;
     }
 
     protected virtual string GetName()

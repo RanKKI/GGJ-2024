@@ -37,7 +37,7 @@ public class ItemBanana : Item
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        var otherEntity = collision.gameObject.GetEntity();
+        collision.gameObject.TryGetEntity(out var otherEntity);
         if (otherEntity.Has(Tag.Player))
         {
             OnStepOn(otherEntity);

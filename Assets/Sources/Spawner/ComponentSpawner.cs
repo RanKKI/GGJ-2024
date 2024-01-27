@@ -7,10 +7,11 @@ using UnityEngine;
 
 public class ComponentSpawner
 {
-    public Dictionary<Item, float> prefabDict;
+    public Dictionary<GameObject, float> prefabDict;
     public BoxCollider2D spawnArea;
     public float timeSinceLastSpawn;
     public float spawnInterval;
+    public float lifeTime;
 }
  
 #region HELPERS

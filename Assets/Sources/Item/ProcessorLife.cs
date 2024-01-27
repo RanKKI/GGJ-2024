@@ -1,4 +1,5 @@
 ﻿using Pixeye.Actors;
+using UnityEngine;
 
 public class ProcessorLife : Processor, ITick
 {
@@ -16,8 +17,18 @@ public class ProcessorLife : Processor, ITick
         
     void Process(ref ent entity, float dt)
     {
-        if (entity == null || entity == default) return;
+        if (entity == null || entity == default || !entity.transform) return;
         var life = entity.ComponentLife();
+
+        float startFlashTime = life.lifeTime - 2;
+        if (life.liveTime < startFlashTime && life.liveTime + dt >= startFlashTime)
+        {
+            SpriteRenderer spriteRenderer = entity.transform.GetComponent<SpriteRenderer>();
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.FlashSprite(Color.clear, 2);
+            }
+        }
         life.liveTime += dt;
         if (life.liveTime > life.lifeTime)
         {

@@ -6,9 +6,10 @@ using UnityEngine;
 public class ActorSpawner : Actor
 {
     [SerializeField]
-    public SerializableDictionary<Item, float> prefabs;
+    public SerializableDictionary<GameObject, float> prefabs;
     public BoxCollider2D spawnArea;
     public float spawnInterval = 1f;
+    public float lifeTime = 10f;
     
     protected override void Setup()
     {
@@ -19,5 +20,6 @@ public class ActorSpawner : Actor
         spawner.prefabDict = prefabs.ToDictionary(x => x.Key, x => x.Value);
         spawner.spawnArea = spawnArea;
         spawner.spawnInterval = spawnInterval;
+        spawner.lifeTime = lifeTime;
     }
 }

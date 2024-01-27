@@ -23,18 +23,24 @@ public class ProcessorSpawner : Processor, ITick
         if (entity == null || entity == default) return;
         var spawner = entity.ComponentSpawner();
         float fdt = UnityEngine.Time.deltaTime;
-        spawner.timeSinceLastSpawn += Time.deltaTime;
+        spawner.timeSinceLastSpawn += fdt;
         if (spawner.timeSinceLastSpawn < spawner.spawnInterval) return;
+        
         // generate spawn point from a random point in spawn area
         var spawnArea = spawner.spawnArea;
         UnityEngine.Vector3 spawnPoint = new UnityEngine.Vector3(Random.Range(spawnArea.bounds.min.x, spawnArea.bounds.max.x),
             Random.Range(spawnArea.bounds.min.y, spawnArea.bounds.max.y), 0);
+        
         // get a random prefab from prefabs
         var prefabs = spawner.prefabDict;
         var prefab = Util.GetRandomWeightedItem(prefabs);
+        
         // spawn the prefab
         var item = Actor.Create(prefab.gameObject, spawnPoint);
         Debug.Log("Spawned " + item.name + " at " + spawnPoint);
         spawner.timeSinceLastSpawn = 0;
+
+        item.entity.Get<ComponentLife>().liveTime = 0;
+        item.entity.Get<ComponentLife>().lifeTime = spawner.lifeTime;
     }
 }
