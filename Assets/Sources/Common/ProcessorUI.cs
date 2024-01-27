@@ -75,6 +75,13 @@ public class ProcessorUI : Processor, IReceive<SignalChangeHealth>, IReceive<Sig
             var hapBar = GameLayer.GetObj("HAP Bar " + id).GetComponent<HAPBar>();
             hapBar.SetValue(newHappiness);
         }
+
+        var gvc = GameLayer.GetObj("GlobalVolumeController").GetComponent<GlobalVolumeController>();
+        float newWeight = 1 - newHappiness / (float)Config.MaxHappiness;
+        if (gvc.volume.weight > newWeight)
+        {
+            gvc.SetWeight(newWeight);
+        }
         
         cHappiness.count = newHappiness;
     }

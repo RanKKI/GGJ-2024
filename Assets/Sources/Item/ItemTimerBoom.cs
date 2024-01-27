@@ -39,7 +39,7 @@ public class ItemTimerBoom : Item
     private void Trigger()
     {
         var obj = entity.Get<ComponentItem>();
-        PlayAnimator(1.08f, () =>
+        PlayAnimator(() =>
         {
             GameLayer.Send(new SignalChangeHealth
             {

@@ -81,6 +81,19 @@ public class ProcessorPlayer : Processor, ITick
                 pos = entity.transform.position,
             });
         }
+        
+        if (dir.y == Vector2.down.y)
+        {
+            cPlayer.canJump = false;
+            cPlayer.rigidbody.ExcludeLayer(LayerMask.NameToLayer("GameBoard"));
+            cPlayer.toggleJump = (collision) =>
+            {
+                cPlayer.rigidbody.IncludeLayer(LayerMask.NameToLayer("GameBoard"));
+                cPlayer.onCollidedWithGround -= cPlayer.toggleJump;
+                cPlayer.canJump = true;
+            };
+            cPlayer.onCollidedWithGround = cPlayer.toggleJump;
+        }
 
         if (dir.x == 0) return; // no horizontal movement
 

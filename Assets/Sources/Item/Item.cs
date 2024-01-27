@@ -130,17 +130,18 @@ public class Item : Actor
 
     protected AnimationCallback animationCallback; // to store the function
 
-    protected void PlayAnimator(float duration, AnimationCallback animationCallback, float wait = 0f)
+    protected void PlayAnimator(AnimationCallback animationCallback = null, float wait = 0f)
     {
         this.animationCallback = animationCallback;
-        StartCoroutine(PlayAnimator2(duration, wait));
+        StartCoroutine(PlayAnimator2(wait));
     }
 
-    protected IEnumerator PlayAnimator2(float duration, float wait = 0f)
+    protected IEnumerator PlayAnimator2(float wait = 0f)
     {
         yield return new WaitForSeconds(wait);
         var animator = GetComponentInChildren<Animator>();
         animator.enabled = true;
+        var duration = animator.GetCurrentAnimatorStateInfo(0).length;
         yield return new WaitForSeconds(duration);
         animationCallback?.Invoke();
     }

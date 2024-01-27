@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Pixeye.Actors;
 
 using UnityEngine;
@@ -9,12 +10,14 @@ public class ItemBomb : Item
     public float velocity = 5f;
     public int damage = 5;
     public int happiness = 3;
+    private Animator ani;
 
     protected override void Setup()
     {
         base.Setup();
         rb = GetComponent<Rigidbody2D>();
         rb.velocity = Vector2.down * velocity;
+        ani = GetComponentInChildren<Animator>();
     }
 
     protected override void SetTag()
@@ -41,6 +44,11 @@ public class ItemBomb : Item
     protected override void OnHitPlayer(ent targetPlayer)
     {
         Debug.Log("on Bomb Hit Player");
+        ani.SetBool("explode", true);
+        var duration = ani.GetCurrentAnimatorStateInfo(0).length;
+        rb.gravityScale = 0;
+        rb.velocity = Vector2.zero;
+        DOTween.Sequence().AppendInterval(duration).OnComplete(Dispose).Play();
         GameLayer.Send(new SignalChangeHealth
         {
             target = targetPlayer,
@@ -57,7 +65,6 @@ public class ItemBomb : Item
             volume = 1,
             pos = transform.position,
         });
-        Dispose();
     }
 
 }

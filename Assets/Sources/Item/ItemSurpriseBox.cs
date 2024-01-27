@@ -23,18 +23,12 @@ public class ItemSurpriseBox : ItemBanana
             volume = 2,
             pos = transform.position,
         });
-        PlayAnimator(0.8f, () => { Dispose(); SendBuff(targetPlayer); });
+        PlayAnimator(() => { Dispose(); SendBuff(targetPlayer); });
         return true;
-    }
-
-    protected override void AfterStepOn()
-    {
-
     }
 
     protected override Buff[] BuffsWhenStepOn(ent targetPlayer)
     {
-
         var playerPos = targetPlayer.transform.localPosition;
         var itemPos = transform.localPosition;
         var dirX = playerPos.x > itemPos.x ? 1 : -1;

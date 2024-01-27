@@ -19,7 +19,7 @@ public class ItemHourglass : ItemBanana
         if (collision.contacts.Length <= 0) return;
         var cItem = entity.Get<ComponentItem>();
         var player = cItem.owner.ComponentPlayer();
-        PlayAnimator(1.1f, () =>
+        PlayAnimator(() =>
         {
             GameLayer.Send(new SignalTransport
             {
