@@ -13,6 +13,14 @@ public class Item : Actor
         entity.InitComponentObject();
         entity.Set<ComponentItem>();
         SetTag();
+
+        var cItem = entity.Get<ComponentItem>();
+        cItem.name = GetName();
+    }
+
+    protected virtual string GetName()
+    {
+        return "";
     }
 
     protected virtual void SetTag()
@@ -37,6 +45,7 @@ public class Item : Actor
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+
         var cItem = entity.Get<ComponentItem>();
         if (!cItem.isActive)
         {
@@ -49,6 +58,15 @@ public class Item : Actor
         {
             OnHitPlayer(otherEntity);
         }
+        else if (collision.gameObject.layer == LayerMask.NameToLayer("GameBoard"))
+        {
+            OnHitGround();
+        }
+    }
+
+    protected virtual void OnHitGround()
+    {
+
     }
 
     protected virtual void OnHitPlayer(ent player)

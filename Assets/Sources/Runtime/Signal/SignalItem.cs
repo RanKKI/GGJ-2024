@@ -9,6 +9,12 @@ public struct SignalHoldItem
 }
 
 
+public struct SignalTouchItem
+{
+	public ent item;
+	public ent player;
+}
+
 public struct SignalFireItem
 {
 	public ent item;
