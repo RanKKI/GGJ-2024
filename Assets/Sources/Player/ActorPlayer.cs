@@ -6,12 +6,20 @@ sealed class ActorPlayer : Actor
 
     public GameObject itemHolder;
 
-
     protected override void Setup()
     {
         var cPlayer = entity.Set<ComponentPlayer>();
         cPlayer.rigidbody = entity.GetMono<Rigidbody2D>(); ;
         cPlayer.col = entity.GetMono<Collider2D>();
+
+        void Callback(bool action)
+        {
+            Debug.Log(cPlayer.name + " isActive changed " + action);
+            cPlayer.col.enabled = action;
+            cPlayer.rigidbody.simulated = action;
+        }
+
+        cPlayer.observer = GameLayer.Observer.Add(cPlayer, src => src.isActive, Callback);
 
         entity.Set<ComponentObject>();
         entity.Set<ComponentHealth>();

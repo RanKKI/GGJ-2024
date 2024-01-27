@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Pixeye.Actors;
 using UnityEngine;
 
@@ -131,6 +132,8 @@ public class ProcessorItem : Processor, ITick, IReceive<SignalHoldItem>,
         var playerIdx = players.entities.FindIndex(x => x.ComponentPlayer().playerType == playerType);
         if (playerIdx < 0) return;
         var player = players.entities[playerIdx];
-        player.transform.position = arg.position;
+        var transport = Game.Create.Transport();
+        transport.TransportObjectTo(player, arg.position);
     }
+
 }
