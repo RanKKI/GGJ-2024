@@ -22,7 +22,7 @@ public class ItemSurpriseBox : ItemBanana
         var dirX = playerPos.x > itemPos.x ? 1 : -1;
         return new Buff[] {
         new() {
-            name = "SurpriseBox",
+            name = BuffName.surpriseBox,
             duration = 2,
             speed = 1.3f,
             autoWalkDir = new Vector2(dirX, 0),

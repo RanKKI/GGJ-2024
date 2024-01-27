@@ -21,7 +21,11 @@ sealed class ProcessorBuffRemoval : Processor, ITick
 				var isExpired = buff.validTo > 0 && buff.validTo < now;
 				if (isExpired)
 				{
-					Debug.Log(now + "Removed Buffer " + buff.name + "  From " + cPlayer.name);
+					GameLayer.Send(new SignalBuffRemoved
+					{
+						buff = buff,
+						player = players[i]
+					});
 					buffs.RemoveAt(j);
 					j--;
 				}

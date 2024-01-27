@@ -1,9 +1,16 @@
 using UnityEngine;
 
+public enum BuffName
+{
+    banana,
+    dead,
+    surpriseBox,
+};
+
 public class Buff
 {
 
-    public string name;
+    public BuffName name;
 
     public float speed = 1;  // 1.3 = +30%, -0.7 = -30%
 
@@ -21,7 +28,7 @@ public class Buff
     // 眩晕
     public static Buff banana = new()
     {
-        name = "Banana",
+        name = BuffName.banana,
         duration = 5,
         vertigo = true,
     };
@@ -31,7 +38,7 @@ public class Buff
         if (duration > 0)
         {
             validTo = Time.timeAsDouble + duration;
-            Debug.Log("Set valid to " + validTo);
+            Debug.Log(name + ", Set valid to " + validTo);
         }
         return new Buff
         {
