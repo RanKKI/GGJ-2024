@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class StartLayer : Layer<GameLayer>
 {
 
+    public GameObject UIRoot;
     public Text text;
     public Image SpriteRenderer;
     public Sprite Player1;
@@ -35,5 +36,16 @@ public class StartLayer : Layer<GameLayer>
     private void onFinished()
     {
 
+    }
+
+
+    private void ShowUI()
+    {
+        UIRoot.SetActive(true);
+    }
+
+    private void HideUI()
+    {
+        UIRoot.SetActive(false);
     }
 }
