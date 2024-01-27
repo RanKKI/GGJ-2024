@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Pixeye.Actors;
 
 using UnityEngine;
@@ -7,12 +8,17 @@ public class ItemBoomerang : Item
 
     public Rigidbody2D rigidbody;
 
+    public GameObject renderer;
+
+    private bool spin = false;
+    private int rotation = 0;
 
     private Vector2 _velocity = Vector2.zero;
 
     public override bool Fire(Vector2 dir)
     {
         base.Fire(dir);
+        spin = true;
         GameObject parent = transform.parent.gameObject;
         if (parent == null) return false;
         transform.SetParent(null);
@@ -25,7 +31,23 @@ public class ItemBoomerang : Item
     public override void OnPickUp()
     {
         base.OnPickUp();
+        spin = false;
         UpdateVelocity(Vector2.zero);
+    }
+
+    void Update()
+    {
+        if (spin)
+        {
+            renderer.transform.rotation = Quaternion.Euler(0, 0, rotation);
+            rotation += 1;
+            // transform.rotation = Quaternion.Euler(0, 0, transform.rotation.z + 1);
+            // var rotateZ = transform.rotation.z;
+            // rotateZ += 1;
+            // Debug.Log(rotateZ + "," + Time.deltaTime);
+            // // transform.rotation = Quaternion.Euler(0, 0, rotateZ);
+            // transform.rotation = Quaternion.AngleAxis(rotateZ, Vector3.forward);
+        }
     }
 
     public override void OnOutOfScreen()
@@ -44,6 +66,8 @@ public class ItemBoomerang : Item
 
     protected override void OnHitPlayer(ent targetPlayer)
     {
+        var cItem = entity.ComponentItem();
+        if (cItem.holder == targetPlayer) return;
         var targetRigibody2D = targetPlayer.GetMono<Rigidbody2D>();
         if (targetRigibody2D != null)
         {
