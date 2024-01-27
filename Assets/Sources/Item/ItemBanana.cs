@@ -55,11 +55,7 @@ public class ItemBanana : Item
             player = targetPlayer,
             buffs = BuffsWhenStepOn(targetPlayer),
         });
-        GameLayer.Send(new SignalDisposeItem
-        {
-            item = entity,
-            obj = gameObject,
-        });
+        Dispose();
     }
 
     protected virtual void SendKarma(ent player)

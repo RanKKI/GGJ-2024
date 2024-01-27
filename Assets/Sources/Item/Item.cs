@@ -1,5 +1,9 @@
+using System.Collections;
 using Pixeye.Actors;
 using UnityEngine;
+
+public delegate void AnimationCallback(); // declare delegate type
+
 
 public class Item : Actor
 {
@@ -72,6 +76,35 @@ public class Item : Actor
     protected virtual void OnHitPlayer(ent player)
     {
 
+    }
+
+
+
+    protected void Dispose()
+    {
+        Debug.Log("Dispose" + entity.ComponentItem().name);
+        GameLayer.Send(new SignalDisposeItem
+        {
+            item = entity,
+            obj = gameObject,
+        });
+    }
+
+
+    protected AnimationCallback animationCallback; // to store the function
+
+    protected void PlayAnimator(float duration, AnimationCallback animationCallback)
+    {
+        this.animationCallback = animationCallback;
+        var animator = GetComponentInChildren<Animator>();
+        animator.enabled = true;
+        StartCoroutine(WaitFor(duration));
+    }
+
+    private IEnumerator WaitFor(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        animationCallback();
     }
 
 }

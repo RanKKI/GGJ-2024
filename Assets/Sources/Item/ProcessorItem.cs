@@ -71,7 +71,9 @@ public class ProcessorItem : Processor, ITick, IReceive<SignalHoldItem>, IReceiv
 
         itemComponent.OnPickUp();
 
-        itemComponent.transform.SetParent(player.transform);
+        var actor = player.GetMono<ActorPlayer>();
+
+        itemComponent.transform.SetParent(actor.itemHolder.transform);
         itemComponent.transform.localPosition = Vector3.zero;
         itemComponent.transform.localRotation = Quaternion.identity;
     }
