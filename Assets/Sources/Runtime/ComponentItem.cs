@@ -4,6 +4,8 @@ public class ComponentItem
 {
 	public bool isActive = false;
 	public bool canSnatch = false;
+	public bool canFire = true;
+
 	public ent holder = default;
 
 	public double holdAt = 0;

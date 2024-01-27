@@ -12,6 +12,7 @@ public class ItemBoom : Item
 
         var obj = entity.Get<ComponentItem>();
         obj.canSnatch = true;
+        obj.canFire = false;
     }
 
 }
