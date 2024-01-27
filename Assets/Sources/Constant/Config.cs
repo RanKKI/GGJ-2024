@@ -5,4 +5,6 @@ public static class Config
 
     public static float JumpForce = 300f;
     public static float Speed = 5f;
+
+
 }
