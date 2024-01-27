@@ -52,28 +52,34 @@ public class ProcessorPlayer : Processor, ITick
             return;
         }
 
-        float walkSpeedSideEffect = 1;
-        if (cPlayer.item != null)
-        {
-            var sideEffect = cPlayer.item.entity.ComponentSideEffect();
-            if (sideEffect != null)
-            {
-                walkSpeedSideEffect = sideEffect.speed;
-            }
-        }
-
-        for (var i = 0; i < cPlayer.buffs.Count; i++)
-        {
-            var buff = cPlayer.buffs[i];
-            walkSpeedSideEffect *= buff.speed;
-        }
-
-        var walkSpeed = Config.Speed * walkSpeedSideEffect;
+        var walkSpeed = Config.Speed * GetPlayerSpeed(cPlayer);
 
         var curr = entity.transform.position;
         var target = (walkSpeed * dt * dir) + (Vector2)curr;
 
         Game.MoveTo(entity, target);
+
+    }
+
+    float GetPlayerSpeed(ComponentPlayer cPlayer)
+    {
+        float baseFactor = 1;
+        if (cPlayer.item != null)
+        {
+            var cItem = cPlayer.item.entity.ComponentItem();
+            for (var i = 0; i < cItem.onHoldBuffs.Length; i++)
+            {
+                var buff = cPlayer.buffs[i];
+                baseFactor *= buff.speed;
+            }
+
+        }
+        for (var i = 0; i < cPlayer.buffs.Length; i++)
+        {
+            var buff = cPlayer.buffs[i];
+            baseFactor *= buff.speed;
+        }
+        return baseFactor;
 
     }
 

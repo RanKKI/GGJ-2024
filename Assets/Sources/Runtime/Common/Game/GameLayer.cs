@@ -17,6 +17,8 @@ public class GameLayer : Layer<GameLayer>
         Add<ProcessorItem>();
         Add<ProcessorUI>();
 
+        Add<ProcessorBuffRemoval>();
+
         Game.Create.Board();
     }
 }

@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class Buff
 {
 
@@ -22,10 +24,21 @@ public class Buff
         vertigo = true,
     };
 
-
     public Buff Start()
     {
-        validTo = UnityEngine.Time.timeAsDouble + duration;
-        return this;
+        if (duration > 0)
+        {
+            validTo = Time.timeAsDouble + duration;
+            Debug.Log("Set valid to " + validTo);
+        }
+        return new Buff
+        {
+            name = name,
+            speed = speed,
+            jump = jump,
+            vertigo = vertigo,
+            validTo = validTo,
+            duration = duration,
+        };
     }
 }

@@ -20,7 +20,7 @@ public class ComponentPlayer
 
     public Action<Collision2D> onCollidedWithGround;
 
-    public List<Buff> buffs;
+    public Buff[] buffs = {};
 
 }
 

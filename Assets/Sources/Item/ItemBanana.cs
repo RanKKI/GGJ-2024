@@ -49,12 +49,13 @@ public class ItemBanana : Item
         {
             return;
         }
+        Buff[] buffs = {
+                Buff.banana,
+            };
         GameLayer.Send(new SignalBuffAdded
         {
             player = targetPlayer,
-            buffs = new System.Collections.Generic.List<Buff> {
-                Buff.banana,
-            }
+            buffs = buffs,
         });
         GameLayer.Send(new SignalDisposeItem
         {

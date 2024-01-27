@@ -13,9 +13,9 @@ public class ComponentItem
 
 	public double holdAt = -1;
 
-	// public List<Buff> onHoldBuffs;
+	public Buff[] onHoldBuffs = {};
 
-	public List<Buff> onTriggerBuffs;
+	public Buff[] onTriggerBuffs = {};
 }
 
 #region HELPERS
