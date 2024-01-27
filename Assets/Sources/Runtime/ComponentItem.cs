@@ -8,6 +8,7 @@ public class ComponentItem
 	public bool isActive = false;
 	public bool canSnatch = false;
 	public bool canFire = true;
+	public ent owner = default; // 第一次捡起来的玩家
 
 	public ent holder = default;
 

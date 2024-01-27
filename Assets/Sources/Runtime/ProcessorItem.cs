@@ -65,7 +65,7 @@ public class ProcessorItem : Processor, ITick, IReceive<SignalHoldItem>, IReceiv
         }
 
         cItem.isActive = true;
-        cItem.holder = player;
+        cItem.holder = cItem.owner = player;
         cItem.holdAt = now;
         cPlayer.item = itemComponent;
 
