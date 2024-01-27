@@ -9,7 +9,6 @@ public delegate void AnimationCallback(); // declare delegate type
 
 public class Item : Actor
 {
-    public float lifeTime = 10f;
 
     protected override void Setup()
     {
