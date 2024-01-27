@@ -1,7 +1,7 @@
 using Pixeye.Actors;
 using UnityEngine;
 
-public class ItemBoom : Item
+public class ItemTimerBoom : Item
 {
 
     protected override void Setup()

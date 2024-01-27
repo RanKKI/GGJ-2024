@@ -4,7 +4,6 @@ using UnityEngine;
 public class Item : Actor
 {
 
-
     protected override void Setup()
     {
         base.Setup();

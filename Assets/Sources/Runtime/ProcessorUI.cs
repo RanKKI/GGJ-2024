@@ -1,4 +1,5 @@
 using Pixeye.Actors;
+using UnityEngine;
 
 public class ProcessorUI : Processor, IReceive<SignalChangeHealth>, IReceive<SignalChangeHappiness>
 {
@@ -16,13 +17,15 @@ public class ProcessorUI : Processor, IReceive<SignalChangeHealth>, IReceive<Sig
         var entity = arg.target;
         var cHealth = entity.ComponentHealth();
 
+        Debug.Log("Health Change by: " + cHealth);
+
         var id = GetPlayerID(entity);
-        var health = cHealth.count += arg.count;
+        cHealth.count += arg.count;
 
         if (entity.Has<ComponentPlayer>())
         {
             var hpBar = GameLayer.GetObj("HP Bar " + id).GetComponent<HPBar>();
-            hpBar.SetHealth(health);
+            hpBar.SetHealth(cHealth.count);
         }
     }
 

@@ -6,6 +6,7 @@ sealed class ActorPlayer : Actor
 
     public GameObject itemHolder;
 
+
     protected override void Setup()
     {
         var cPlayer = entity.Set<ComponentPlayer>();
