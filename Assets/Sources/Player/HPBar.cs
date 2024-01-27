@@ -18,7 +18,6 @@ class HPBar : MonoCached
         {
             var idx = leftToRight ? i : maxHealth - i - 1;
             var child = transform.GetChild(idx);
-            Debug.Log("idx:" + idx + ",Set Health to" + health);
             if (child == null)
             {
                 Debug.LogError("child not found");

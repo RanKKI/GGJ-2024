@@ -21,13 +21,23 @@ public class ComponentPlayer
     public Vector2 dir = default;
 
     public bool canJump = true;
-    
+
     public Action<Collision2D> onCollidedWithGround;
 
-    public Buff[] buffs = {};
+    public Buff[] buffs = { };
 
 
     public bool isActive = true;
+
+
+    public void AddBuff(Buff buff)
+    {
+        var list = new List<Buff>(buffs)
+        {
+            buff
+        };
+        buffs = list.ToArray();
+    }
 
 }
 
