@@ -67,10 +67,14 @@ public class ProcessorPlayer : Processor, ITick
     void FireItem(ref ent entity)
     {
         var cPlayer = entity.ComponentPlayer();
-
         var item = cPlayer.item;
-        if (item == null) return;
+        if (item == null)
+        {
+            Debug.Log(cPlayer.name + ", try to fire, but no item");
+            return;
+        }
 
+        Debug.Log(cPlayer.name + ", Send Fire signal");
         GameLayer.Send(new SignalFireItem
         {
             item = item.entity,
@@ -82,7 +86,7 @@ public class ProcessorPlayer : Processor, ITick
     bool UseItem(ComponentPlayer cPlayer)
     {
         return Input.GetKeyDown(
-            cPlayer.playerType == PlayerType.Player1 ? KeyCode.Q : KeyCode.LeftShift);
+            cPlayer.playerType == PlayerType.Player1 ? KeyCode.RightShift : KeyCode.E);
     }
 
     Vector2 CheckInput1()

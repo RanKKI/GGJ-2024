@@ -45,11 +45,11 @@ sealed class ActorPlayer : Actor
         }
         bool isSuccessHoldItem = false;
         ent itemEnt = default;
-        if (otherEntity.Has(Tag.Item))
+        if (otherEntity.Has(Tag.Item) || otherEntity.Has(Tag.ItemTrigger))
         {
-            if (cPlayer.item == null)
+            itemEnt = otherEntity;
+            if (otherEntity.Has(Tag.Item) && cPlayer.item == null)
             {
-                itemEnt = otherEntity;
                 var cItem = otherEntity.Get<ComponentItem>();
                 isSuccessHoldItem = !cItem.isActive;
             }
@@ -61,13 +61,24 @@ sealed class ActorPlayer : Actor
             itemEnt = item;
         }
 
-        if (!isSuccessHoldItem || itemEnt == default) return;
+        if (itemEnt == default) return;
 
-        GameLayer.Send(new SignalHoldItem
+        if (isSuccessHoldItem)
         {
-            item = itemEnt,
-            holder = entity
-        });
+            GameLayer.Send(new SignalHoldItem
+            {
+                item = itemEnt,
+                holder = entity
+            });
+        }
+        else
+        {
+            GameLayer.Send(new SignalTouchItem
+            {
+                item = itemEnt,
+                player = entity
+            });
+        }
     }
 
     public ent StealItemFromPlayer(ent otherEntity)

@@ -2,13 +2,15 @@
 
 public class ComponentItem
 {
+	public string name;
+
 	public bool isActive = false;
 	public bool canSnatch = false;
 	public bool canFire = true;
 
 	public ent holder = default;
 
-	public double holdAt = 0;
+	public double holdAt = -1;
 }
 
 #region HELPERS
