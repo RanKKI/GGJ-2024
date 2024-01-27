@@ -1,5 +1,6 @@
 using DG.Tweening;
 using Pixeye.Actors;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -8,11 +9,19 @@ public class StartLayer : Layer<GameLayer>
 {
 
     public GameObject UIRoot;
-    public Text text;
+    public TextMeshProUGUI text;
     public Image SpriteRenderer;
     public Image NameRenderer;
 
     public Image Overlay;
+
+
+    public GameObject frontStage;
+    public GameObject backStage;
+
+
+    public SpriteRenderer spotlight;
+    public SpriteRenderer spotlightCharacter;
 
     public Sprite Player1;
     public Sprite Player2;
@@ -26,7 +35,11 @@ public class StartLayer : Layer<GameLayer>
     protected override void Setup()
     {
         text.text = "";
+        Add<ProcessorBackground>();
         Next();
+
+        frontStage.SetActive(true);
+        backStage.SetActive(false);
     }
 
     public void Next()
@@ -42,8 +55,15 @@ public class StartLayer : Layer<GameLayer>
         if (content.action != CanvasAction.none)
         {
             ExecuteAction(content.action);
-            return;
         }
+
+        GameLayer.Send(new SignalChangeBack
+        {
+            layer = this,
+            spotlight = content.spotlight,
+            SpotlightCharacter = content.spotlightCharacter,
+        });
+
         text.text = content.text;
         UpdateUI(content.playerType);
     }
@@ -73,15 +93,14 @@ public class StartLayer : Layer<GameLayer>
     {
         switch (action)
         {
-            case CanvasAction.ChangeSceneTo1:
+            case CanvasAction.ChangeToBackStage:
                 Overlay.DOColor(Color.black, 1f).OnComplete(() =>
                 {
+                    frontStage.SetActive(false);
+                    backStage.SetActive(true);
                     Next();
                     Overlay.DOColor(Color.clear, 1f);
                 });
-                break;
-            case CanvasAction.ChangeSceneTo2:
-                SceneManager.LoadScene("Scene 2");
                 break;
         }
     }
