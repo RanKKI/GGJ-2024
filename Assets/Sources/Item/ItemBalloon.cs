@@ -12,6 +12,7 @@ public class ItemBalloon : Item
     public float maxDuration = 3f;
     public Ease easeMode = Ease.InCubic;
     private Action<Collision2D> handleFallCollision;
+    private Animator ani;
 
     protected override void Setup()
     {
@@ -24,6 +25,8 @@ public class ItemBalloon : Item
             }
         };
         obj.onHoldBuffs = buffs;
+        ani = GetComponent<Animator>();
+        ani.enabled = false;
     }
 
     public override void OnPickUp()
@@ -37,22 +40,28 @@ public class ItemBalloon : Item
         var cPlayer = holder.Get<ComponentPlayer>();
         cPlayer.rigidbody.gravityScale = 0;
         cPlayer.rigidbody.velocity = Vector2.zero;
-        holder.transform.DOMoveY(targetY, randDuration).SetEase(easeMode).OnComplete(() =>
+        holder.transform.DOMoveY(targetY, randDuration).SetEase(easeMode).OnComplete(OnMoveEnd);
+    }
+
+    void OnMoveEnd()
+    {
+        var holder = entity.Get<ComponentItem>().holder;
+        var cPlayer = holder.Get<ComponentPlayer>();
+        cPlayer.rigidbody.gravityScale = 1;
+        handleFallCollision = collision =>
         {
-            cPlayer.rigidbody.gravityScale = 1;
-            handleFallCollision = collision =>
-            {
-                FallingDamage(holder, collision.relativeVelocity.y);
-                cPlayer.onCollidedWithGround -= handleFallCollision;
-            };
-            cPlayer.onCollidedWithGround += handleFallCollision;
-            GameLayer.Send(new SignalChangeHappiness
-            {
-                count = 1,
-                target = holder,
-            });
-            Dispose();
+            FallingDamage(holder, collision.relativeVelocity.y);
+            cPlayer.onCollidedWithGround -= handleFallCollision;
+        };
+        cPlayer.onCollidedWithGround += handleFallCollision;
+        GameLayer.Send(new SignalChangeHappiness
+        {
+            count = 1,
+            target = holder,
         });
+        ani.enabled = true;
+        // set the parent to the root of the scene
+        transform.SetParent(null);
     }
 
     void FallingDamage(ent fallingEntity, float fallSpeed)
