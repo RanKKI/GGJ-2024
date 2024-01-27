@@ -10,7 +10,7 @@ public class GameLayer : Layer<GameLayer>
     protected override void Setup()
     {
 
-        Add(new ProcessorCollider(new List<Collider2D> { collider2D }));
+        // Add(new ProcessorCollider(new List<Collider2D> { collider2D }));
         Add<ProcessorBuff>();
         Add<ProcessorPlayer>();
 

@@ -1,6 +1,7 @@
-﻿using Pixeye.Actors;
+﻿using System;
+using Pixeye.Actors;
 
-
+[Serializable]
 public struct SignalChangeHappiness
 {
     public ent target;

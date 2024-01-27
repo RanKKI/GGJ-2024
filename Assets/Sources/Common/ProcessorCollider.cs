@@ -1,4 +1,4 @@
-//  Project : 2D Roguelike Actors
+/*//  Project : 2D Roguelike Actors
 // Contacts : @Alexeee#8796 - https://discord.gg/zAJn9SX
 
 using System.Collections.Generic;
@@ -32,4 +32,4 @@ sealed class ProcessorCollider : Processor
 			Physics.buffer.Remove(cObject.collider.GetHashCode());
 		}
 	}
-}
+}*/

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Pixeye.Actors;
+using Unity.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public static class Util
@@ -76,6 +78,56 @@ public static class Util
             return;
         }
         entity = actor.entity;
+    }
+    
+
+    
+}
+
+public class ColliderEventHandler : MonoBehaviour
+{
+    public Action<Collider2D> OnTriggerEnterEvent;
+    public Action<Collider2D> OnTriggerExitEvent;
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        OnTriggerEnterEvent?.Invoke(other);
+    }
+    
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        OnTriggerExitEvent?.Invoke(other);
+    }
+
+    private void OnDisable()
+    {
+        OnTriggerEnterEvent = null;
+        OnTriggerExitEvent = null;
+    }
+}
+
+public static class ColliderEventExtension
+{
+    public static void OnTriggerExit2DEvent<T>(this T self, Action<Collider2D> onCollisionExit)
+        where T : UnityEngine.Component
+    {
+        self.GetOrAddComponent<ColliderEventHandler>().OnTriggerExitEvent += onCollisionExit;
+    }
+        
+    public static void OnTriggerExit2DEvent(this GameObject self, Action<Collider2D> onCollisionExit)
+    {
+        self.GetOrAddComponent<ColliderEventHandler>().OnTriggerExitEvent += onCollisionExit;
+    }
+    
+    public static void OnTriggerEnter2DEvent<T>(this T self, Action<Collider2D> onCollisionEnter)
+        where T : UnityEngine.Component
+    {
+        self.GetOrAddComponent<ColliderEventHandler>().OnTriggerEnterEvent += onCollisionEnter;
+    }
+    
+    public static void OnTriggerEnter2DEvent(this GameObject self, Action<Collider2D> onCollisionEnter)
+    {
+        self.GetOrAddComponent<ColliderEventHandler>().OnTriggerEnterEvent += onCollisionEnter;
     }
 }
 
