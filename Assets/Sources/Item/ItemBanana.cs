@@ -34,13 +34,28 @@ public class ItemBanana : Item
         return true;
     }
 
-    protected override void OnHitGround()
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("On banana Hit Ground");
+        var otherEntity = collision.gameObject.GetEntity();
+        if (otherEntity.Has(Tag.Player))
+        {
+            OnStepOn(otherEntity);
+        }
     }
 
-    protected override void OnHitPlayer(ent targetPlayer)
+    protected void OnStepOn(ent targetPlayer)
     {
+        if (entity.Has(Tag.Item))
+        {
+            return;
+        }
+        GameLayer.Send(new SignalBuffAdded
+        {
+            player = targetPlayer,
+            buffs = new System.Collections.Generic.List<Buff> {
+                Buff.banana,
+            }
+        });
         GameLayer.Send(new SignalDisposeItem
         {
             item = entity,

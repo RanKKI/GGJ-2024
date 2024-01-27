@@ -11,6 +11,7 @@ sealed class ActorPlayer : Actor
     {
         var cPlayer = entity.Set<ComponentPlayer>();
         cPlayer.rigidbody = entity.GetMono<Rigidbody2D>(); ;
+        cPlayer.buffs = new System.Collections.Generic.List<Buff>();
 
         entity.Set<ComponentObject>();
         entity.Set<ComponentHealth>();

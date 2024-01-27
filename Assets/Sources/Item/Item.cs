@@ -51,7 +51,7 @@ public class Item : Actor
         {
             return;
         }
-        if (cItem.holder != default) return;
+        // if (cItem.holder != default) return;
 
         var otherEntity = collision.gameObject.GetEntity();
         if (otherEntity.Has(Tag.Player))

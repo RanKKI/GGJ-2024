@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Pixeye.Actors;
 using UnityEngine;
 
@@ -18,6 +19,8 @@ public class ComponentPlayer
     public Vector2 dir = default;
 
     public Action<Collision2D> onCollidedWithGround;
+
+    public List<Buff> buffs;
 
 }
 

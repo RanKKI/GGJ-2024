@@ -1,4 +1,5 @@
-﻿using Pixeye.Actors;
+﻿using System.Collections.Generic;
+using Pixeye.Actors;
 
 public class ComponentItem
 {
@@ -11,6 +12,10 @@ public class ComponentItem
 	public ent holder = default;
 
 	public double holdAt = -1;
+
+	// public List<Buff> onHoldBuffs;
+
+	public List<Buff> onTriggerBuffs;
 }
 
 #region HELPERS

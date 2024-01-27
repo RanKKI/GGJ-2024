@@ -20,6 +20,12 @@ public class ProcessorPlayer : Processor, ITick
     {
 
         var cPlayer = entity.ComponentPlayer();
+
+        if (IsPlayerDisabledByVertigo(cPlayer))
+        {
+            return;
+        }
+
         var cObject = entity.ComponentObject();
 
         var dir = cPlayer.playerType == PlayerType.Player1 ? CheckInput1() : CheckInput2();
@@ -55,6 +61,13 @@ public class ProcessorPlayer : Processor, ITick
                 walkSpeedSideEffect = sideEffect.speed;
             }
         }
+
+        for (var i = 0; i < cPlayer.buffs.Count; i++)
+        {
+            var buff = cPlayer.buffs[i];
+            walkSpeedSideEffect *= buff.speed;
+        }
+
         var walkSpeed = Config.Speed * walkSpeedSideEffect;
 
         var curr = entity.transform.position;
@@ -62,6 +75,11 @@ public class ProcessorPlayer : Processor, ITick
 
         Game.MoveTo(entity, target);
 
+    }
+
+    bool IsPlayerDisabledByVertigo(ComponentPlayer cPlayer)
+    {
+        return cPlayer.buffs.FindIndex(buff => buff.vertigo) >= 0;
     }
 
     void FireItem(ref ent entity)
