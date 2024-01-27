@@ -7,6 +7,14 @@ public class ItemHourglass : ItemBanana
         return "ItemHourglass";
     }
 
+
+    public override bool Fire(Vector2 dir)
+    {
+        PlayAnimator(1f, () => { }, 0.5f);
+        return base.Fire(dir);
+    }
+
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.contacts.Length <= 0) return;
