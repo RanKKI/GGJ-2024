@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.IL2CPP.CompilerServices;
 using Pixeye.Actors;
@@ -8,7 +9,7 @@ using UnityEngine;
 public class ComponentSpawner
 {
     public Dictionary<GameObject, float> prefabDict;
-    public BoxCollider2D spawnArea;
+    public Func<Vector3> spawnPointFunc;
     public float timeSinceLastSpawn;
     public float spawnInterval;
     public float lifeTime;

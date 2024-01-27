@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Pixeye.Actors;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ActorSpawner : Actor
 {
     [SerializeField]
     public SerializableDictionary<GameObject, float> prefabs;
-    public BoxCollider2D spawnArea;
     public float spawnInterval = 1f;
     public float lifeTime = 10f;
     
@@ -15,11 +16,31 @@ public class ActorSpawner : Actor
     {
         base.Setup();
         // get prefabs from child
-        spawnArea = GetComponent<BoxCollider2D>();
         var spawner = entity.Set<ComponentSpawner>();
         spawner.prefabDict = prefabs.ToDictionary(x => x.Key, x => x.Value);
-        spawner.spawnArea = spawnArea;
         spawner.spawnInterval = spawnInterval;
         spawner.lifeTime = lifeTime;
+        
+        var spawnArea = GetComponent<BoxCollider2D>();
+        if (spawnArea)
+        {
+            spawner.spawnPointFunc = () =>
+            {
+                var spawnPoint = new Vector3(Random.Range(spawnArea.bounds.min.x, spawnArea.bounds.max.x),
+                    Random.Range(spawnArea.bounds.min.y, spawnArea.bounds.max.y), 0);
+                return spawnPoint;
+            };
+        }
+        else
+        {
+            // get a random point from all children
+            var children = GetComponentsInChildren<Transform>();
+            spawner.spawnPointFunc = () =>
+            {
+                var spawnPoint = children[Random.Range(0, children.Length)].position;
+                return spawnPoint;
+            };
+        }
+        
     }
 }

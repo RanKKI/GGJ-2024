@@ -27,9 +27,7 @@ public class ProcessorSpawner : Processor, ITick
         if (spawner.timeSinceLastSpawn < spawner.spawnInterval) return;
         
         // generate spawn point from a random point in spawn area
-        var spawnArea = spawner.spawnArea;
-        UnityEngine.Vector3 spawnPoint = new UnityEngine.Vector3(Random.Range(spawnArea.bounds.min.x, spawnArea.bounds.max.x),
-            Random.Range(spawnArea.bounds.min.y, spawnArea.bounds.max.y), 0);
+        UnityEngine.Vector3 spawnPoint = spawner.spawnPointFunc();
         
         // get a random prefab from prefabs
         var prefabs = spawner.prefabDict;
