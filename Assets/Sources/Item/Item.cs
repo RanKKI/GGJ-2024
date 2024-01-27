@@ -97,6 +97,10 @@ public class Item : Actor
         {
             OnHitGround();
         }
+        if (collision.gameObject.layer == LayerMask.NameToLayer("AirBlock"))
+        {
+            Debug.Log("撞墙");
+        }
     }
 
     protected virtual void OnHitGround()
@@ -108,8 +112,6 @@ public class Item : Actor
     {
 
     }
-
-
 
     protected void Dispose()
     {

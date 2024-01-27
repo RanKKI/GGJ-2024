@@ -37,7 +37,7 @@ public class ProcessorSpawner : Processor, ITick
         
         // spawn the prefab
         var item = Actor.Create(prefab.gameObject, spawnPoint);
-        Debug.Log("Spawned " + item.name + " at " + spawnPoint);
+        // Debug.Log("Spawned " + item.name + " at " + spawnPoint);
         spawner.timeSinceLastSpawn = 0;
 
         item.entity.Get<ComponentLife>().liveTime = 0;

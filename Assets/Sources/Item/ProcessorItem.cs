@@ -23,16 +23,16 @@ public class ProcessorItem : Processor, ITick, IReceive<SignalHoldItem>,
     void Process(ref ent entity, float dt)
     {
         if (entity == null || entity == default) return;
-        var pos = entity.transform.localPosition;
-        Camera camera = Camera.main;
-        if (Math.Abs(pos.x) >= ScreenSize.width)
-        {
-            Item item = entity.GetMono<Item>();
-            if (item != null)
-            {
-                item.OnOutOfScreen();
-            }
-        }
+        // var pos = entity.transform.localPosition;
+        // Camera camera = Camera.main;
+        // if (Math.Abs(pos.x) >= ScreenSize.width)
+        // {
+        //     Item item = entity.GetMono<Item>();
+        //     if (item != null)
+        //     {
+        //         item.OnOutOfScreen();
+        //     }
+        // }
     }
 
     public void HandleSignal(in SignalHoldItem arg)
@@ -113,6 +113,7 @@ public class ProcessorItem : Processor, ITick, IReceive<SignalHoldItem>,
             var cPlayer = cItem.holder.ComponentPlayer();
             cPlayer.item = null;
         }
+        cItem.owner = default;
         cItem.holder = default;
         cItem.isActive = false;
         item.Release();
