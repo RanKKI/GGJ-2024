@@ -1,4 +1,4 @@
-using Pixeye.Actors;
+using System.Collections;
 using UnityEngine;
 
 public class ItemTimerBoom : Item
@@ -17,6 +17,23 @@ public class ItemTimerBoom : Item
             }
         };
         obj.onHoldBuffs = buffs;
+    }
+
+
+    public override void OnPickUp()
+    {
+        StartCoroutine(DelayTrigger(5f));
+    }
+
+    private IEnumerator DelayTrigger(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        Trigger();
+    }
+
+    private void Trigger()
+    {
+        PlayAnimator(1.08f, () => { Dispose(); });
     }
 
 }

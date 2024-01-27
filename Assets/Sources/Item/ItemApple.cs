@@ -44,14 +44,4 @@ public class ItemApple : Item
         Dispose();
     }
 
-
-    private void Dispose()
-    {
-        GameLayer.Send(new SignalDisposeItem
-        {
-            item = entity,
-            obj = gameObject,
-        });
-    }
-
 }

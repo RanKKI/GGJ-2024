@@ -51,11 +51,7 @@ public class ItemBalloon : Item
                 count = 1,
                 target = holder,
             });
-            GameLayer.Send(new SignalDisposeItem
-            {
-                item = entity,
-                obj = gameObject,
-            });
+            Dispose();
         });
     }
 
