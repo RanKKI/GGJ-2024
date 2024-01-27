@@ -49,6 +49,7 @@ public class ItemBanana : Item
         {
             return;
         }
+        SendKarma(targetPlayer);
         GameLayer.Send(new SignalBuffAdded
         {
             player = targetPlayer,
@@ -58,6 +59,16 @@ public class ItemBanana : Item
         {
             item = entity,
             obj = gameObject,
+        });
+    }
+
+    protected virtual void SendKarma(ent player)
+    {
+        var cItem = entity.ComponentItem();
+        GameLayer.Send(new SignalChangeHappiness
+        {
+            target = player,
+            count = cItem.owner == player ? 0 : 2,
         });
     }
 
