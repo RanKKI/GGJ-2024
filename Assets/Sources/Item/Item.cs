@@ -47,7 +47,15 @@ public class Item : Actor
 
     public void SetConstraint(GameObject parent)
     {
-        var constraint = gameObject.AddComponent<ParentConstraint>();
+        var constraint = GetComponent<ParentConstraint>();
+        if (constraint == null)
+        {
+            constraint = gameObject.AddComponent<ParentConstraint>();
+        }
+        if (constraint.sourceCount > 0)
+        {
+            constraint.RemoveSource(0);
+        }
         constraint.AddSource(new ConstraintSource
         {
             sourceTransform = parent.transform,
