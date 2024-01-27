@@ -2,7 +2,7 @@ using System;
 using Pixeye.Actors;
 using UnityEngine;
 
-public class ProcessorItem : Processor, ITick, IReceive<SignalHoldItem>, IReceive<SignalFireItem>, IReceive<SignalDisposeItem>
+public class ProcessorItem : Processor, ITick, IReceive<SignalHoldItem>, IReceive<SignalFireItem>, IReceive<SignalDisposeItem>, IReceive<SignalTouchItem>
 {
 
     readonly Group<ComponentObject> objects;
@@ -42,18 +42,21 @@ public class ProcessorItem : Processor, ITick, IReceive<SignalHoldItem>, IReceiv
         var cItem = item.ComponentItem();
         var cPlayer = player.ComponentPlayer();
 
-        Debug.Log(cPlayer.name + " hold item " + cItem);
+        Debug.Log(cPlayer.name + " try hold item " + cItem.name);
         var itemComponent = item.GetMono<Item>();
 
         if (cPlayer.item != null)
         {
+            Debug.Log(cPlayer.name + " currently hold an item, skip");
             return;
         }
 
-        if (now - cItem.holdAt < 1)
+        if (cItem.holdAt > 0 && now - cItem.holdAt < 1)
         {
             return;
         }
+
+        Debug.Log(cPlayer.name + " hold item " + cItem.name);
 
         if (cItem.holder != default)
         {
@@ -81,11 +84,12 @@ public class ProcessorItem : Processor, ITick, IReceive<SignalHoldItem>, IReceiv
 
         var cItem = item.ComponentItem();
 
-        if(!cItem.canFire) return;
+        if (!cItem.canFire) return;
 
         var cPlayer = player.ComponentPlayer();
         var itemComponent = item.GetMono<Item>();
 
+        Debug.Log("itemComponent.Fire(cPlayer.dir);");
         itemComponent.Fire(cPlayer.dir);
 
         cItem.holder = default;
@@ -96,6 +100,7 @@ public class ProcessorItem : Processor, ITick, IReceive<SignalHoldItem>, IReceiv
     {
         var item = arg.item;
         var cItem = item.Get<ComponentItem>();
+        Debug.Log("SignalDisposeItem: " + cItem.name);
         if (cItem.holder != default)
         {
             var cPlayer = cItem.holder.ComponentPlayer();
@@ -106,4 +111,12 @@ public class ProcessorItem : Processor, ITick, IReceive<SignalHoldItem>, IReceiv
         item.Release();
         GameLayer.Destroy(arg.obj);
     }
+
+    public void HandleSignal(in SignalTouchItem arg)
+    {
+        var cPlayer = arg.player.ComponentPlayer();
+        var cItem = arg.item.ComponentItem();
+        Debug.Log(cPlayer.name + " Has Touched" + cItem.name);
+    }
+
 }
