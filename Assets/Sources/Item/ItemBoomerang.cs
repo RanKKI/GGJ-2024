@@ -41,12 +41,6 @@ public class ItemBoomerang : Item
         {
             renderer.transform.rotation = Quaternion.Euler(0, 0, rotation);
             rotation += 1;
-            // transform.rotation = Quaternion.Euler(0, 0, transform.rotation.z + 1);
-            // var rotateZ = transform.rotation.z;
-            // rotateZ += 1;
-            // Debug.Log(rotateZ + "," + Time.deltaTime);
-            // // transform.rotation = Quaternion.Euler(0, 0, rotateZ);
-            // transform.rotation = Quaternion.AngleAxis(rotateZ, Vector3.forward);
         }
     }
 
