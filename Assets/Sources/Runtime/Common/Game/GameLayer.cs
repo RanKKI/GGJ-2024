@@ -16,6 +16,8 @@ public class GameLayer : Layer<GameLayer>
 
         Add<ProcessorItem>();
         Add<ProcessorUI>();
+        
+        Add<ProcessorSpawner>();
 
         Add<ProcessorBuffRemoval>();
 

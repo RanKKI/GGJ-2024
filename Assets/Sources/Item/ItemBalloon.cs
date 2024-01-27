@@ -36,17 +36,14 @@ public class ItemBalloon : Item
         var holder = entity.Get<ComponentItem>().holder;
         var cPlayer = holder.Get<ComponentPlayer>();
         cPlayer.rigidbody.gravityScale = 0;
+        cPlayer.rigidbody.velocity = Vector2.zero;
         holder.transform.DOMoveY(targetY, randDuration).SetEase(easeMode).OnComplete(() =>
         {
             cPlayer.rigidbody.gravityScale = 1;
             handleFallCollision = collision =>
             {
-                var fallSpeed = collision.relativeVelocity.y;
-                if (fallSpeed > 0 && cPlayer.rigidbody.velocity.y == 0)
-                {
-                    FallingDamage(holder, collision.relativeVelocity.y);
-                    cPlayer.onCollidedWithGround -= handleFallCollision;
-                }
+                FallingDamage(holder, collision.relativeVelocity.y);
+                cPlayer.onCollidedWithGround -= handleFallCollision;
             };
             cPlayer.onCollidedWithGround += handleFallCollision;
             GameLayer.Send(new SignalChangeHappiness

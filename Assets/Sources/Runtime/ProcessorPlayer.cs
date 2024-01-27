@@ -1,9 +1,11 @@
+using System;
 using Pixeye.Actors;
 using UnityEngine;
 
 public class ProcessorPlayer : Processor, ITick
 {
     readonly Group<ComponentObject, ComponentPlayer> source;
+    Action<Collision2D> toggleJump;
 
     public void Tick(float dt)
     {
@@ -39,18 +41,19 @@ public class ProcessorPlayer : Processor, ITick
 
         cPlayer.dir = dir;
 
-        if (dir == Vector2.up)
+        if (dir == Vector2.up && cPlayer.canJump)
         {
             cPlayer.rigidbody.AddForce(Vector2.up * Config.JumpForce);
-            return;
+            cPlayer.canJump = false;
+            toggleJump = (collision) =>
+            {
+                cPlayer.canJump = true;
+                cPlayer.onCollidedWithGround -= toggleJump;
+            };
+            cPlayer.onCollidedWithGround = toggleJump;
         }
-
-        if (dir == Vector2.down)
-        {
-            Game.ChangeHealth(entity, -0.5f);
-            Game.ChangeHappiness(entity, -1);
-            return;
-        }
+        
+        if (dir.x == 0) return; // no horizontal movement
 
         var walkSpeed = Config.Speed * GetPlayerSpeed(cPlayer);
 
@@ -69,7 +72,7 @@ public class ProcessorPlayer : Processor, ITick
             var cItem = cPlayer.item.entity.ComponentItem();
             for (var i = 0; i < cItem.onHoldBuffs.Length; i++)
             {
-                var buff = cPlayer.buffs[i];
+                var buff = cItem.onHoldBuffs[i];
                 baseFactor *= buff.speed;
             }
 

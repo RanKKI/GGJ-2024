@@ -3,6 +3,7 @@ using Pixeye.Actors;
 public class ComponentHealth
 {
     public float count = 10;
+    public int maxHealth = 10;
 }
 
 #region HELPERS

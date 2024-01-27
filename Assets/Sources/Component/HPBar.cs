@@ -14,7 +14,6 @@ class HPBar : MonoCached
 
     public void SetHealth(float health)
     {
-        health = Mathf.Clamp(health, 0, maxHealth); // bound the health
         for (int i = 0; i < maxHealth; i++)
         {
             var idx = leftToRight ? i : maxHealth - i - 1;

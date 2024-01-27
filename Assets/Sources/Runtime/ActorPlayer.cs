@@ -23,7 +23,10 @@ sealed class ActorPlayer : Actor
     {
         HandleCollisionWithItem(collision.collider);
         var cPlayer = entity.Get<ComponentPlayer>();
-        cPlayer.onCollidedWithGround?.Invoke(collision);
+        if (collision.relativeVelocity.y > 0 && Mathf.Abs(cPlayer.rigidbody.velocity.y) < 0.1f)
+        {
+            cPlayer.onCollidedWithGround?.Invoke(collision);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -36,15 +39,7 @@ sealed class ActorPlayer : Actor
         var cPlayer = entity.ComponentPlayer();
         Debug.Log(name + " Collision " + collision.gameObject.name);
         Debug.Log(name + " Hold " + cPlayer.item);
-        ent otherEntity;
-        try
-        {
-            otherEntity = collision.gameObject.GetEntity();
-        }
-        catch (System.Exception)
-        {
-            return;
-        }
+        collision.gameObject.TryGetEntity(out var otherEntity);
         bool isSuccessHoldItem = false;
         ent itemEnt = default;
         if (otherEntity.Has(Tag.Item) || otherEntity.Has(Tag.ItemTrigger))

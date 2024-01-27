@@ -20,7 +20,8 @@ public class ProcessorUI : Processor, IReceive<SignalChangeHealth>, IReceive<Sig
         Debug.Log("Health Change by: " + cHealth);
 
         var id = GetPlayerID(entity);
-        cHealth.count += arg.count;
+        var newHealth = Mathf.Clamp(cHealth.count + arg.count, 0, cHealth.maxHealth); // bound the health
+        cHealth.count = newHealth;
 
         if (entity.Has<ComponentPlayer>())
         {

@@ -18,6 +18,8 @@ public class ComponentPlayer
 
     public Vector2 dir = default;
 
+    public bool canJump = true;
+    
     public Action<Collision2D> onCollidedWithGround;
 
     public Buff[] buffs = {};

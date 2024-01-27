@@ -53,7 +53,7 @@ public class Item : Actor
         }
         // if (cItem.holder != default) return;
 
-        var otherEntity = collision.gameObject.GetEntity();
+        collision.gameObject.TryGetEntity(out var otherEntity);
         if (otherEntity.Has(Tag.Player))
         {
             OnHitPlayer(otherEntity);

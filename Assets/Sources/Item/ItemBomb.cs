@@ -26,7 +26,7 @@ public class ItemBomb : Item
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        var otherEntity = collision.gameObject.GetEntity();
+        collision.gameObject.TryGetEntity(out var otherEntity);
         if (otherEntity.Has(Tag.Player))
         {
             OnHitPlayer(otherEntity);
