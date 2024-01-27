@@ -2,10 +2,12 @@ using System;
 using Pixeye.Actors;
 using UnityEngine;
 
-public class ProcessorItem : Processor, ITick, IReceive<SignalHoldItem>, IReceive<SignalFireItem>, IReceive<SignalDisposeItem>, IReceive<SignalTouchItem>
+public class ProcessorItem : Processor, ITick, IReceive<SignalHoldItem>,
+    IReceive<SignalFireItem>, IReceive<SignalDisposeItem>, IReceive<SignalTouchItem>, IReceive<SignalTransport>
 {
 
     readonly Group<ComponentObject> objects;
+    readonly Group<ComponentObject, ComponentPlayer> players;
 
     public void Tick(float dt)
     {
@@ -121,4 +123,12 @@ public class ProcessorItem : Processor, ITick, IReceive<SignalHoldItem>, IReceiv
         Debug.Log(cPlayer.name + " Has Touched" + cItem.name);
     }
 
+    public void HandleSignal(in SignalTransport arg)
+    {
+        var playerType = arg.playerType;
+        var playerIdx = players.entities.FindIndex(x => x.ComponentPlayer().playerType == playerType);
+        if (playerIdx < 0) return;
+        var player = players.entities[playerIdx];
+        player.transform.position = arg.position;
+    }
 }
