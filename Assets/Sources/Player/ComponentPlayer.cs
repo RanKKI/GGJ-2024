@@ -26,6 +26,9 @@ public class ComponentPlayer
 
     public Buff[] buffs = {};
 
+
+    public bool isActive = true;
+
 }
 
 #region HELPERS

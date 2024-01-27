@@ -25,10 +25,16 @@ public partial class Game
 
             cPlayer1.name = "Player1";
             cPlayer1.playerType = PlayerType.Player1;
-            
+
             cPlayer2.name = "Player2";
             cPlayer2.playerType = PlayerType.Player2;
 
+        }
+
+        public static Transport Transport()
+        {
+            var transport = GameLayer.Actor.Create(Prefab.Transport, new Vector3(0, 0));
+            return transport.GetComponent<Transport>();
         }
 
     }

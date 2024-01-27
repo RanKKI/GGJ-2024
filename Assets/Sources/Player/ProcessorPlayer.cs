@@ -21,8 +21,11 @@ public class ProcessorPlayer : Processor, ITick
 
     void Process(ref ent entity, float dt)
     {
-
         var cPlayer = entity.ComponentPlayer();
+        if (!cPlayer.isActive)
+        {
+            return;
+        }
 
         if (IsPlayerDisabledByVertigo(cPlayer))
         {
