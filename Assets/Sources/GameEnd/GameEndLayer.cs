@@ -1,9 +1,11 @@
+using System.Collections;
 using DG.Tweening;
 using Pixeye.Actors;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class GameEndLayer : Layer<GameLayer>
 {
@@ -41,6 +43,10 @@ public class GameEndLayer : Layer<GameLayer>
     public PlayerType winner = PlayerType.Player1;
 
     public AudioSource gunShot;
+
+    public GameObject closingOBJ;
+
+    public VideoPlayer videoPlayer;
 
     protected override void Setup()
     {
@@ -147,16 +153,35 @@ public class GameEndLayer : Layer<GameLayer>
                     winner == PlayerType.Player1 ? JokerStand1 : JokerStand2;
                 break;
             case EndCanvasAction.ShowTheEnd:
-                NextButton.interactable = false;
-                var sprite = theEnd.GetComponent<SpriteRenderer>();
-                theEnd.SetActive(true);
-                sprite.color = Color.clear;
-                sprite.DOColor(Color.white, 1f).onComplete += () =>
-                {
-                    NextButton.interactable = true;
-                };
+                StartCoroutine(ShowClosing());
                 break;
         }
+    }
+
+    private IEnumerator ShowClosing()
+    {
+        NextButton.interactable = false;
+        closingOBJ.SetActive(true);
+        var animator = closingOBJ.GetComponent<Animator>();
+        animator.enabled = true;
+        yield return new WaitForSeconds(2f);
+        var sprite = theEnd.GetComponent<SpriteRenderer>();
+        theEnd.SetActive(true);
+        sprite.color = Color.clear;
+        sprite.DOColor(Color.white, 1f).onComplete += () =>
+        {
+            NextButton.interactable = true;
+            videoPlayer.Play();
+            DOTween
+                .Sequence()
+                .AppendInterval(0.5f)
+                .OnComplete(() =>
+                {
+                    closingOBJ.SetActive(false);
+                    theEnd.SetActive(false);
+                })
+                .Play();
+        };
     }
 
     private void OnFinished()
