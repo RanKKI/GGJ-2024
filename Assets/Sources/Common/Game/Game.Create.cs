@@ -2,10 +2,8 @@ using UnityEngine;
 
 public partial class Game
 {
-
     public static class Create
     {
-
         public static void Board(int columns = 32, int rows = 18)
         {
             Create.Player();
@@ -14,8 +12,8 @@ public partial class Game
 
         public static void Player()
         {
-            var player1 = GameLayer.Actor.Create(Prefab.Player1, new Vector3(1, 1));
-            var player2 = GameLayer.Actor.Create(Prefab.Player2, new Vector3(2, 1));
+            var player1 = GameLayer.Actor.Create(Prefab.Player1, new Vector3(-7, -3));
+            var player2 = GameLayer.Actor.Create(Prefab.Player2, new Vector3(7, -3));
 
             player1.gameObject.name = "Player1";
             player2.gameObject.name = "Player2";
@@ -28,7 +26,6 @@ public partial class Game
 
             cPlayer2.name = "Player2";
             cPlayer2.playerType = PlayerType.Player2;
-
         }
 
         public static Transport Transport()
@@ -36,6 +33,5 @@ public partial class Game
             var transport = GameLayer.Actor.Create(Prefab.Transport, new Vector3(0, 0));
             return transport.GetComponent<Transport>();
         }
-
     }
 }
