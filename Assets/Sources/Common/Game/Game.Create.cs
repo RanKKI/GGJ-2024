@@ -12,8 +12,8 @@ public partial class Game
 
         public static void Player()
         {
-            var player1 = GameLayer.Actor.Create(Prefab.Player1, new Vector3(-7, -3));
-            var player2 = GameLayer.Actor.Create(Prefab.Player2, new Vector3(7, -3));
+            var player1 = GameLayer.Actor.Create(Prefab.Player1, new Vector3(7, -3));
+            var player2 = GameLayer.Actor.Create(Prefab.Player2, new Vector3(-7, -3));
 
             player1.gameObject.name = "Player1";
             player2.gameObject.name = "Player2";
