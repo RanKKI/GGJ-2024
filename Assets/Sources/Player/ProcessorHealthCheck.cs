@@ -41,6 +41,7 @@ public class ProcessorHealthCheck : Processor, ITick, IReceive<SignalChangeDead>
         var cPlayer = target.ComponentPlayer();
         if (cPlayer == null) return;
         
+        cPlayer.ani.SetBool("faint", true);
         GameLayer.Send(new SignalPlaySound
         {
             name = "down",
