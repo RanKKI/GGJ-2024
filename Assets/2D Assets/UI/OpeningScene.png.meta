@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 148051cdf7571cb45a9f7fb64e830822
+guid: 2d30396353cc113419944dcc05dc9af0
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 16384
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: OpeningScence-1920_0
+      name: OpeningScene_0
       rect:
         serializedVersion: 2
         x: 0
@@ -124,14 +124,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3fb33738e5d24ba44826c23b08d23c43
-      internalID: -963115971
+      spriteID: ebe7c2823c325c44a98d8482a30a204f
+      internalID: 1714845253
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: OpeningScence-1920_1
+      name: OpeningScene_1
       rect:
         serializedVersion: 2
         x: 1920
@@ -145,14 +145,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dc761a16ee6df78449b3edaa4010d62b
-      internalID: 1539152007
+      spriteID: 5dd9fb76bf44ad44d91093bdaeef398b
+      internalID: 1578112601
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: OpeningScence-1920_2
+      name: OpeningScene_2
       rect:
         serializedVersion: 2
         x: 3840
@@ -166,14 +166,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3cfa5fd9cb713884f9d596f4009fbfee
-      internalID: 1478604032
+      spriteID: 53c46077d9d18b347bfb22cb6a542af5
+      internalID: 221860521
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: OpeningScence-1920_3
+      name: OpeningScene_3
       rect:
         serializedVersion: 2
         x: 5760
@@ -187,14 +187,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fb374dc9137de9e46ad593f3dd9b1b34
-      internalID: -140724143
+      spriteID: fdb0199148d821349bd65deeb3061185
+      internalID: 1897898257
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: OpeningScence-1920_4
+      name: OpeningScene_4
       rect:
         serializedVersion: 2
         x: 7680
@@ -208,14 +208,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b49c518c75fd4ff4a8ee7ff2b0d4b9af
-      internalID: -1862389759
+      spriteID: 36500bd0d7a666a409bf9a82c2e1c067
+      internalID: -492273002
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: OpeningScence-1920_5
+      name: OpeningScene_5
       rect:
         serializedVersion: 2
         x: 9600
@@ -229,14 +229,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4e692541821bc6e49a35c620bd597494
-      internalID: -1950847302
+      spriteID: 7fd8415b71d879442a353e104bcb9d48
+      internalID: 688205506
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: OpeningScence-1920_6
+      name: OpeningScene_6
       rect:
         serializedVersion: 2
         x: 11520
@@ -250,8 +250,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c400b7205f4c1384daa0b2f44c8a856d
-      internalID: 1123630108
+      spriteID: 7057430d29a865a47808222914bd0434
+      internalID: 19738955
       vertices: []
       indices: 
       edges: []
@@ -267,13 +267,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      OpeningScence-1920_0: -963115971
-      OpeningScence-1920_1: 1539152007
-      OpeningScence-1920_2: 1478604032
-      OpeningScence-1920_3: -140724143
-      OpeningScence-1920_4: -1862389759
-      OpeningScence-1920_5: -1950847302
-      OpeningScence-1920_6: 1123630108
+      OpeningScene_0: 1714845253
+      OpeningScene_1: 1578112601
+      OpeningScene_2: 221860521
+      OpeningScene_3: 1897898257
+      OpeningScene_4: -492273002
+      OpeningScene_5: 688205506
+      OpeningScene_6: 19738955
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
