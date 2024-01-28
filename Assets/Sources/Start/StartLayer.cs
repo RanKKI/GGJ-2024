@@ -1,3 +1,4 @@
+using System.Collections;
 using DG.Tweening;
 using Pixeye.Actors;
 using TMPro;
@@ -19,6 +20,10 @@ public class StartLayer : Layer<GameLayer>
     public GameObject frontStage;
     public GameObject backStage;
 
+    public GameObject opening;
+
+    public Canvas canvas;
+
 
     public SpriteRenderer spotlight;
     public SpriteRenderer spotlightCharacter;
@@ -32,14 +37,28 @@ public class StartLayer : Layer<GameLayer>
     public Sprite MonsterName;
     private int index = -1;
 
+
+    public Button NextButton;
+
     protected override void Setup()
     {
         text.text = "";
         Add<ProcessorBackground>();
-        Next();
+        HideUI();
+        StartCoroutine(SetupAsync());
+    }
 
-        frontStage.SetActive(true);
+    private IEnumerator SetupAsync()
+    {
+        frontStage.SetActive(false);
         backStage.SetActive(false);
+        opening.SetActive(true);
+        var animator = opening.GetComponent<Animator>();
+        animator.enabled = true;
+        var duration = animator.GetCurrentAnimatorStateInfo(0).length;
+        yield return new WaitForSeconds(duration);
+        ShowUI();
+        Next();
     }
 
     public void Next()
@@ -94,31 +113,46 @@ public class StartLayer : Layer<GameLayer>
         switch (action)
         {
             case CanvasAction.ChangeToBackStage:
+                NextButton.interactable = false;
                 Overlay.DOColor(Color.black, 1f).OnComplete(() =>
                 {
                     frontStage.SetActive(false);
                     backStage.SetActive(true);
                     Next();
-                    Overlay.DOColor(Color.clear, 1f);
+                    Overlay.DOColor(Color.clear, 1f)
+                        .onComplete += () => NextButton.interactable = true;
                 });
                 break;
         }
     }
 
-
     private void OnFinished()
     {
+        spotlight.enabled = false;
+        spotlightCharacter.enabled = false;
+        SpriteRenderer.enabled = false;
+        NameRenderer.enabled = false;
+        canvas.enabled = false;
         SceneManager.LoadScene("Scene Default");
     }
 
 
     private void ShowUI()
     {
-        UIRoot.SetActive(true);
+        SetUI(true);
     }
 
     private void HideUI()
     {
-        UIRoot.SetActive(false);
+        SetUI(false);
+    }
+
+    private void SetUI(bool active)
+    {
+        spotlight.enabled = active;
+        spotlightCharacter.enabled = active;
+        SpriteRenderer.enabled = active;
+        NameRenderer.enabled = active;
+        canvas.enabled = active;
     }
 }
