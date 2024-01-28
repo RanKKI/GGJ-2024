@@ -4,4 +4,7 @@ public enum PlayerType
     Player2,
 
     Ringmaster,
+    None,
+
+    Winner,
 }
