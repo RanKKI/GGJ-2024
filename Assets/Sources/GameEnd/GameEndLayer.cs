@@ -44,6 +44,7 @@ public class GameEndLayer : Layer<GameLayer>
 
     protected override void Setup()
     {
+        winner = PlayerPrefs.GetInt("winner") == 1 ? PlayerType.Player1 : PlayerType.Player2;
         text.text = "";
         Add<ProcessorEndBackground>();
         theEnd.SetActive(false);

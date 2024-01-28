@@ -94,17 +94,10 @@ public class ItemBoomerang : Item
         rigidbody.velocity = vec;
     }
 
-    private bool didPickUp = false;
-    
     protected override void OnHitPlayer(ent targetPlayer)
     {
         base.OnHitPlayer(targetPlayer);
         var cItem = entity.ComponentItem();
-        if (!didPickUp)
-        {
-            didPickUp = true;
-            return;
-        }
         GameLayer.Send(new SignalChangeHappiness
         {
             count = targetPlayer == cItem.owner ? happinessHitSelf : happinessHitOther,
