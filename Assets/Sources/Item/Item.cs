@@ -29,11 +29,12 @@ public class Item : Actor
         cItem.canFire = true;
         colObserver = Observer.Add(cItem, src => src.holder, holderEntity =>
         {
-            if (gameObject.activeSelf == false) return;
-            if (TryGetComponent(out Collider2D col))
-            {
-                col.enabled = holderEntity == default;
-            }
+            try {
+                if (TryGetComponent(out Collider2D col))
+                {
+                    col.enabled = holderEntity == default;
+                }
+            } catch {}
         });
     }
 

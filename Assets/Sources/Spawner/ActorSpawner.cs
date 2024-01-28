@@ -35,6 +35,8 @@ public class ActorSpawner : Actor
         {
             // get a random point from all children
             var children = GetComponentsInChildren<Transform>();
+            // exclude self
+            children = children.Where(x => x != transform).ToArray();
             spawner.spawnPointFunc = () =>
             {
                 var spawnPoint = children[Random.Range(0, children.Length)].position;

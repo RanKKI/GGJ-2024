@@ -58,6 +58,7 @@ public class ItemBanana : Item
 
     protected virtual void SendBuff(ent targetPlayer)
     {
+        targetPlayer.Get<ComponentPlayer>().ani.SetBool("faint", true);
         GameLayer.Send(new SignalPlaySound
         {
             name = "down",

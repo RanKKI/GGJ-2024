@@ -57,7 +57,10 @@ public class ProcessorHealthCheck : Processor, ITick, IReceive<SignalChangeDead>
 
     public void HandleSignal(in SignalBuffRemoved arg)
     {
-        if (arg.buff.name != BuffName.dead) return;
-        GameLayer.Send(new SignalChangeHealth { target = arg.player, count = 5, ignoreDeath = true});
+        if (arg.buff.name == BuffName.dead)
+        {
+            GameLayer.Send(new SignalChangeHealth { target = arg.player, count = 5, ignoreDeath = true });
+        }
+        arg.player.ComponentPlayer().ani.SetBool("faint", false);
     }
 }
