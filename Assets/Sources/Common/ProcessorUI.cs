@@ -77,10 +77,11 @@ public class ProcessorUI : Processor, IReceive<SignalChangeHealth>, IReceive<Sig
         }
 
         var gvc = GameLayer.GetObj("GlobalVolumeController").GetComponent<GlobalVolumeController>();
-        float newWeight = 1 - newHappiness / (float)Config.MaxHappiness;
-        if (gvc.volume.weight > newWeight)
+        float newSaturation = newHappiness / (float)Config.MaxHappiness;
+        float value = -100 + newSaturation * 100;
+        if (gvc.colorAdjustments.saturation.value < value)
         {
-            gvc.SetWeight(newWeight);
+            gvc.SetSaturation(value);
         }
         
         cHappiness.count = newHappiness;

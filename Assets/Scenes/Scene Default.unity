@@ -3434,7 +3434,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4610651549323733989, guid: 0106a8ad1d01e4f9c8b5211a65c43a62, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 4610651549323733989, guid: 0106a8ad1d01e4f9c8b5211a65c43a62, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -5628,7 +5628,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4610651549323733989, guid: 0106a8ad1d01e4f9c8b5211a65c43a62, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 4610651549323733989, guid: 0106a8ad1d01e4f9c8b5211a65c43a62, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -7239,6 +7239,10 @@ PrefabInstance:
     - target: {fileID: 7386579885527506524, guid: 3de8935b219a84b4e90230957a09c649, type: 3}
       propertyPath: m_Name
       value: OpeningScence-1920_0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7386579885527506524, guid: 3de8935b219a84b4e90230957a09c649, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
