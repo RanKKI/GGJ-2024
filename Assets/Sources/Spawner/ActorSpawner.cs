@@ -20,6 +20,8 @@ public class ActorSpawner : Actor
         spawner.prefabDict = prefabs.ToDictionary(x => x.Key, x => x.Value);
         spawner.spawnInterval = spawnInterval;
         spawner.lifeTime = lifeTime;
+        // random initial spawn time
+        spawner.timeSinceLastSpawn = Random.Range(0, spawnInterval);
         
         var spawnArea = GetComponent<BoxCollider2D>();
         if (spawnArea)

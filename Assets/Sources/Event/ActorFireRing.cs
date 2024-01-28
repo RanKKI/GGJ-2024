@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DG.Tweening;
 using Pixeye.Actors;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class ActorFireRing : Actor
     public List<Collider2D> damagingColliders = new List<Collider2D>();
     public SignalChangeHappiness signalChangeHappiness;
     public SignalChangeHealth signalChangeHealth;
+    public Animator ani;
     
     protected override void Setup()
     {
@@ -33,8 +35,14 @@ public class ActorFireRing : Actor
                         volume = 1,
                         pos = transform.position,
                     });
-                    transform.gameObject.Release();
-                    Destroy(this);
+                    DisableAllColliders();
+                    ani.enabled = true;
+                    var duration = ani.GetCurrentAnimatorStateInfo(0).length;
+                    DOTween.Sequence().AppendInterval(duration).OnComplete(() =>
+                    {
+                        transform.gameObject.Release();
+                        Destroy(this);
+                    }).Play();
                 }
             });
         }
@@ -53,10 +61,28 @@ public class ActorFireRing : Actor
                         volume = 1,
                         pos = transform.position,
                     });
-                    transform.gameObject.Release();
-                    Destroy(this);
+                    DisableAllColliders();
+                    ani.enabled = true;
+                    var duration = ani.GetCurrentAnimatorStateInfo(0).length;
+                    DOTween.Sequence().AppendInterval(duration).OnComplete(() =>
+                    {
+                        transform.gameObject.Release();
+                        Destroy(this);
+                    }).Play();
                 }
             });
+        }
+    }
+    
+    void DisableAllColliders()
+    {
+        foreach (var col in happyAddingColliders)
+        {
+            col.enabled = false;
+        }
+        foreach (var col in damagingColliders)
+        {
+            col.enabled = false;
         }
     }
     

@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using Pixeye.Actors;
 using UnityEngine;
 using Random = Pixeye.Actors.Random;
@@ -68,6 +69,12 @@ public class ProcessorUI : Processor, IReceive<SignalChangeHealth>, IReceive<Sig
                 volume = 1,
                 pos = entity.transform.position,
             });
+            var gvc = GameLayer.GetObj("GlobalVolumeController").GetComponent<GlobalVolumeController>();
+            float newSaturation = newHappiness / (float)Config.MaxHappiness;
+            float value = -50 + newSaturation * 100;
+            var saturation = gvc.colorAdjustments.saturation;
+            DOTween.To(() => saturation.value, x => saturation.value = x, value, 3)
+                .SetEase(Ease.Linear); // Optional callback when the animation completes
         }
         
         if (entity.Has<ComponentPlayer>())
@@ -76,14 +83,6 @@ public class ProcessorUI : Processor, IReceive<SignalChangeHealth>, IReceive<Sig
             hapBar.SetValue(newHappiness);
         }
 
-        var gvc = GameLayer.GetObj("GlobalVolumeController").GetComponent<GlobalVolumeController>();
-        float newSaturation = newHappiness / (float)Config.MaxHappiness;
-        float value = -100 + newSaturation * 100;
-        if (gvc.colorAdjustments.saturation.value < value)
-        {
-            gvc.SetSaturation(value);
-        }
-        
         cHappiness.count = newHappiness;
     }
 }
