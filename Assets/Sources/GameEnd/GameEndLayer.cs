@@ -40,6 +40,8 @@ public class GameEndLayer : Layer<GameLayer>
 
     public PlayerType winner = PlayerType.Player1;
 
+    public AudioSource gunShot;
+
     protected override void Setup()
     {
         text.text = "";
@@ -51,7 +53,6 @@ public class GameEndLayer : Layer<GameLayer>
 
     public void Next()
     {
-        Debug.Log("Next");
         index++;
         if (index >= EndContent.contents.Length)
         {
@@ -124,6 +125,7 @@ public class GameEndLayer : Layer<GameLayer>
                 Overlay.color = Color.black;
                 break;
             case EndCanvasAction.Gunshot:
+                gunShot.Play();
                 Debug.Log("Gunshot");
                 break;
             case EndCanvasAction.MasterLine1:
