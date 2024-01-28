@@ -8,14 +8,12 @@ using UnityEngine.UI;
 
 public class StartLayer : Layer<GameLayer>
 {
-
     public GameObject UIRoot;
     public TextMeshProUGUI text;
     public Image SpriteRenderer;
     public Image NameRenderer;
 
     public Image Overlay;
-
 
     public GameObject frontStage;
     public GameObject backStage;
@@ -24,6 +22,7 @@ public class StartLayer : Layer<GameLayer>
 
     public Canvas canvas;
 
+    public GameObject dialog;
 
     public SpriteRenderer spotlight;
     public SpriteRenderer spotlightCharacter;
@@ -37,8 +36,10 @@ public class StartLayer : Layer<GameLayer>
     public Sprite MonsterName;
     private int index = -1;
 
-
     public Button NextButton;
+
+    public GameObject Tutorial1;
+    public GameObject Tutorial2;
 
     protected override void Setup()
     {
@@ -76,17 +77,19 @@ public class StartLayer : Layer<GameLayer>
             ExecuteAction(content.action);
         }
 
-        GameLayer.Send(new SignalChangeBack
-        {
-            layer = this,
-            spotlight = content.spotlight,
-            SpotlightCharacter = content.spotlightCharacter,
-        });
+        GameLayer.Send(
+            new SignalChangeBack
+            {
+                layer = this,
+                spotlight = content.spotlight,
+                SpotlightCharacter = content.spotlightCharacter,
+            }
+        );
 
         text.text = content.text;
+        dialog.SetActive(content.text != "");
         UpdateUI(content.playerType);
     }
-
 
     private void UpdateUI(PlayerType playerType)
     {
@@ -107,35 +110,51 @@ public class StartLayer : Layer<GameLayer>
         }
     }
 
-
     private void ExecuteAction(CanvasAction action)
     {
+        SpriteRenderer stageRenderer = backStage.GetComponentInChildren<SpriteRenderer>();
         switch (action)
         {
             case CanvasAction.ChangeToBackStage:
                 NextButton.interactable = false;
-                Overlay.DOColor(Color.black, 1f).OnComplete(() =>
-                {
-                    frontStage.SetActive(false);
-                    backStage.SetActive(true);
-                    Next();
-                    Overlay.DOColor(Color.clear, 1f)
-                        .onComplete += () => NextButton.interactable = true;
-                });
+                Overlay
+                    .DOColor(Color.black, 1f)
+                    .OnComplete(() =>
+                    {
+                        frontStage.SetActive(false);
+                        backStage.SetActive(true);
+                        Next();
+                        Overlay.DOColor(Color.clear, 1f).onComplete += () =>
+                            NextButton.interactable = true;
+                    });
+                break;
+            case CanvasAction.ChangeToTute1:
+                HideAllElements();
+                Tutorial1.SetActive(true);
+                break;
+            case CanvasAction.ChangeToTute2:
+                HideAllElements();
+                Tutorial2.SetActive(true);
                 break;
         }
     }
 
-    private void OnFinished()
+    private void HideAllElements()
     {
         spotlight.enabled = false;
         spotlightCharacter.enabled = false;
         SpriteRenderer.enabled = false;
         NameRenderer.enabled = false;
-        canvas.enabled = false;
-        SceneManager.LoadScene("Scene Default");
+        Tutorial1.SetActive(false);
+        Tutorial2.SetActive(false);
     }
 
+    private void OnFinished()
+    {
+        canvas.enabled = false;
+        HideAllElements();
+        SceneManager.LoadScene("Scene Default");
+    }
 
     private void ShowUI()
     {

@@ -2,6 +2,9 @@ public enum CanvasAction
 {
     none,
     ChangeToBackStage,
+
+    ChangeToTute1,
+    ChangeToTute2,
 }
 
 public class Content
@@ -126,6 +129,8 @@ public class Content
             playerType = PlayerType.Ringmaster,
             text =
                 "The opening ceremony concludes with dazzling fireworks, marking the beginning of the 'Happy Show' with enthusiastic applause and cheers from the audience……"
-        }
+        },
+        new() { action = CanvasAction.ChangeToTute1 },
+        new() { action = CanvasAction.ChangeToTute2 }
     };
 }
