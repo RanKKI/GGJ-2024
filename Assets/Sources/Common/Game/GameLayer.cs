@@ -25,6 +25,7 @@ public class GameLayer : Layer<GameLayer>
         Add<ProcessorLife>();
         
         Add<ProcessorSound>();
+        Add<ProcessorGameEnd>();
 
         Game.Create.Board();
     }
