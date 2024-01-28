@@ -102,7 +102,7 @@ MonoBehaviour:
   _entity: 0
   prefabReferenceName: 
   rb: {fileID: 5508203378519097600}
-  velocity: 3
+  velocity: 2
   recover: 3
 --- !u!61 &6173523605871189715
 BoxCollider2D:

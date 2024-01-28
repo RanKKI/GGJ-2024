@@ -10,7 +10,8 @@ public delegate void AnimationCallback(); // declare delegate type
 
 public class Item : Actor
 {
-
+    private ent colObserver;
+    
     protected override void Setup()
     {
         base.Setup();
@@ -26,6 +27,14 @@ public class Item : Actor
         cItem.isActive = false;
         cItem.canSnatch = false;
         cItem.canFire = true;
+        colObserver = Observer.Add(cItem, src => src.holder, holderEntity =>
+        {
+            if (gameObject.activeSelf == false) return;
+            if (TryGetComponent(out Collider2D col))
+            {
+                col.enabled = holderEntity == default;
+            }
+        });
     }
 
     protected virtual string GetName()
@@ -125,6 +134,7 @@ public class Item : Actor
 
     protected void Dispose()
     {
+        colObserver.Release();
         entity.Remove<ComponentLife>();
         Debug.Log("Dispose" + entity.ComponentItem().name);
         GameLayer.Send(new SignalDisposeItem
